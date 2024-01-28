@@ -1,0 +1,27 @@
+﻿<Page
+    x:Class="Ntruk.PickVersion"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Ntruk"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
+
+    <RelativePanel x:Name="main"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Background="#0affffff"
+               CornerRadius="8">
+        <ComboBox x:Name="pick"
+                  Margin="16, 16, 16, 8"
+                  Width="200"
+                  Header="请选择一个Minecraft版本："
+                  PlaceholderText="版本..."
+                  SelectionChanged="pick_SelectionChanged">
+        </ComboBox>
+        <TextBlock RelativePanel.Below="pick"
+                   Text="*仅支持正式版本与部分的子版本。"
+                   Margin="16, 8, 16, 16"/>
+    </RelativePanel>
+</Page>

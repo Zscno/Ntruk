@@ -1,0 +1,64 @@
+﻿<Page
+    x:Class="Ntruk.Home"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Ntruk"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls">
+
+    <Page.Resources>
+        <DataTemplate x:Key="HomeObj" x:DataType="local:HomeObj">
+            <RelativePanel MinWidth="300" Height="72">
+                <Image x:Name="icon"
+                       Source="{x:Bind IconLocation}"
+                       Width="64"
+                       Height="64"
+                       RelativePanel.AlignLeftWithPanel="True"
+                       Margin="4, 4, 2, 4"/>
+                <TextBlock x:Name="title"
+                           Text="{x:Bind Title}"
+                           RelativePanel.RightOf="icon"
+                           Margin="2, 4, 4, 2"
+                           FontWeight="Bold"
+                           FontSize="16"/>
+                <TextBlock x:Name="description"
+                           Text="{x:Bind Description}"
+                           RelativePanel.Below="title"
+                           RelativePanel.RightOf="icon"
+                           Foreground="#7f7f7f"
+                           FontSize="12"/>
+            </RelativePanel>
+        </DataTemplate>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Ntruk"
+                   FontSize="50"
+                   Grid.Row="0"
+                   VerticalAlignment="Center"/>
+        <GridView x:Name="content"
+                  Grid.Row="1"
+                  SelectionMode="Single"
+                  ItemTemplate="{StaticResource HomeObj}"
+                  IsItemClickEnabled="True"
+                  SelectionChanged="content_SelectionChanged">
+            <GridView.ItemContainerStyle>
+                <Style TargetType="GridViewItem">
+                    <Setter Property="Margin" Value="4"/>
+                </Style>
+            </GridView.ItemContainerStyle>
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid x:Name="MaxItemsWrapGrid"
+                           MaximumRowsOrColumns="3"
+                           Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+        </GridView>
+    </Grid>
+</Page>

@@ -1,0 +1,42 @@
+﻿<Page
+    x:Class="Ntruk.PickFolder"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Ntruk"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d">
+
+    <RelativePanel x:Name="main"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Background="#1f7f7f7f"
+                   CornerRadius="8">
+        <TextBlock x:Name="tip"
+                   Text="请选择一个Minecraft文件夹："
+                   Margin="16, 16, 16, 8"/>
+        <Button RelativePanel.AlignRightWithPanel="True"
+                Margin="8, 10, 16, 8"
+                Content="使用默认Minecraft文件夹*"
+                Click="default_Click"
+                IsEnabled="False"/>
+        <TextBox x:Name="type"
+                 RelativePanel.Below="tip"
+                 Margin="16, 8, 8, 16"
+                 Width="350"
+                 TextChanged="type_TextChanged"/>
+        <Button x:Name="open"
+                Content="打开..."
+                RelativePanel.RightOf="type"
+                RelativePanel.Below="tip"
+                Margin="8, 8, 16, 16"
+                Click="open_Click"/>
+        <TextBlock RelativePanel.Below="type"
+                   TextWrapping="WrapWholeWords"
+                   Margin="16, 8, 16, 16"
+                   IsTextSelectionEnabled="True">
+            *我们遇到了一些未知问题。“使用默认Minecraft文件夹”目前不可用。<LineBreak/>你可以在“选择文件夹”的地址栏中输入：<LineBreak/>“C:\Users\*你的用户名*\AppData\Roaming\.minecraft”以达到同样的效果。
+        </TextBlock>
+    </RelativePanel>
+</Page>

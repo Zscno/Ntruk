@@ -1,0 +1,35 @@
+﻿<Page
+    x:Class="Ntruk.UserMainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Ntruk"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls">
+    <muxc:NavigationView x:Name="mainPanel"
+                         SelectionChanged="NavigationView_SelectionChanged"
+                         IsBackButtonVisible="Collapsed">
+        <muxc:NavigationView.MenuItems>
+            <muxc:NavigationViewItem Content="主页"
+                                     x:Name="home"
+                                     Icon="Home"/>
+            <muxc:NavigationViewItem Content="Minecraft资源提取器"
+                                     x:Name="mCRE">
+                <muxc:NavigationViewItem.Icon>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE77f;"/>
+                </muxc:NavigationViewItem.Icon>
+            </muxc:NavigationViewItem>
+        </muxc:NavigationView.MenuItems>
+        <muxc:NavigationView.FooterMenuItems>
+            <muxc:NavigationViewItem Content="关于"
+                                     x:Name="about">
+                <muxc:NavigationViewItem.Icon>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE946;"/>
+                </muxc:NavigationViewItem.Icon>
+            </muxc:NavigationViewItem>
+        </muxc:NavigationView.FooterMenuItems>
+        <Frame x:Name="content"
+               Navigated="content_Navigated"/>
+    </muxc:NavigationView>
+</Page>
