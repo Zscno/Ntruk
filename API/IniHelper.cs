@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ntruk
+namespace Ntruk.API
 {
     /// <summary>
     /// 关于Ini文件的IO操作。

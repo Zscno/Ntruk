@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ntruk.API;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
@@ -12,7 +13,7 @@ using Windows.UI.Xaml.Media;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
-namespace Ntruk
+namespace Ntruk.GUI
 {
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
@@ -127,7 +128,6 @@ namespace Ntruk
             oK.IsEnabled = false;
             int[] ints = new int[content.SelectedItems.Count];
             int count = -1;
-            int count1 = 0;
             if (content.SelectedItems.Count == 0)
             {
                 ContentDialogHelper.ShowTipDialog("请选择要提取的资源。");
@@ -181,7 +181,6 @@ namespace Ntruk
                                     {
                                         extension = ".png";
                                     }
-                                    extension = ".png";
                                     break;
                                 case "\uE8D6":
                                     extension = ".ogg";
@@ -205,7 +204,7 @@ namespace Ntruk
                             string[] temp = item.Title.Split("/");
                             string fileName = string.Join('-', temp) + extension;
                             await item2.CopyAsync(targetFolder, fileName);
-                            
+
                         }
                     }
                 }
@@ -220,9 +219,9 @@ namespace Ntruk
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
             {
                 DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-                if (child != null && child is RelativePanel)
+                if (child != null && child is RelativePanel panel)
                 {
-                    return (RelativePanel)child;
+                    return panel;
                 }
                 else
                 {

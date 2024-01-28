@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="Ntruk.PickFolder"
+    x:Class="Ntruk.GUI.PickFolder"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Ntruk"

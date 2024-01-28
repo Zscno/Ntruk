@@ -3,7 +3,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
-namespace Ntruk
+namespace Ntruk.API
 {
     /// <summary>
     /// 关于Page的常用操作。

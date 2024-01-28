@@ -117,42 +117,42 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="About.xaml.cs">
+    <Compile Include="GUI\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ContentDialogHelper.cs" />
-    <Compile Include="GVObj.cs" />
-    <Compile Include="Home.xaml.cs">
+    <Compile Include="API\ContentDialogHelper.cs" />
+    <Compile Include="API\GVObj.cs" />
+    <Compile Include="GUI\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
     </Compile>
-    <Compile Include="IniHelper.cs" />
-    <Compile Include="InitPage.xaml.cs">
+    <Compile Include="API\IniHelper.cs" />
+    <Compile Include="GUI\InitPage.xaml.cs">
       <DependentUpon>InitPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="GUI\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MCRE.xaml.cs">
+    <Compile Include="GUI\MCRE.xaml.cs">
       <DependentUpon>MCRE.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PageHelper.cs" />
-    <Compile Include="PickFolder.xaml.cs">
+    <Compile Include="API\PageHelper.cs" />
+    <Compile Include="GUI\PickFolder.xaml.cs">
       <DependentUpon>PickFolder.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PickTarget.xaml.cs">
+    <Compile Include="GUI\PickTarget.xaml.cs">
       <DependentUpon>PickTarget.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PickVersion.xaml.cs">
+    <Compile Include="GUI\PickVersion.xaml.cs">
       <DependentUpon>PickVersion.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings.xaml.cs">
+    <Compile Include="GUI\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserMainPage.xaml.cs">
+    <Compile Include="GUI\UserMainPage.xaml.cs">
       <DependentUpon>UserMainPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -226,43 +226,43 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="About.xaml">
+    <Page Include="GUI\About.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Home.xaml">
+    <Page Include="GUI\Home.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="InitPage.xaml">
+    <Page Include="GUI\InitPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="GUI\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MCRE.xaml">
+    <Page Include="GUI\MCRE.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PickFolder.xaml">
+    <Page Include="GUI\PickFolder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PickTarget.xaml">
+    <Page Include="GUI\PickTarget.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PickVersion.xaml">
+    <Page Include="GUI\PickVersion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Settings.xaml">
+    <Page Include="GUI\Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserMainPage.xaml">
+    <Page Include="GUI\UserMainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -278,6 +278,7 @@
       <Version>8.0.1</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

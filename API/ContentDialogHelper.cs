@@ -1,7 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml.Controls;
 
-namespace Ntruk
+namespace Ntruk.API
 {
     /// <summary>
     /// 帮助简化<c>ContentDialog</c>的操作。
