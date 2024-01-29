@@ -21,19 +21,19 @@ namespace Ntruk.GUI
         {
             if (args.IsSettingsSelected)
             {
-                content.Navigate(typeof(Settings));
+                contentFrame.Navigate(typeof(Settings));
             }
             else if (args.SelectedItem == home)
             {
-                content.Navigate(typeof(Home));
+                contentFrame.Navigate(typeof(Home));
             }
             else if (args.SelectedItem == mCRE)
             {
-                content.Navigate(typeof(MCRE));
+                contentFrame.Navigate(typeof(MCRE));
             }
             else if (args.SelectedItem == about)
             {
-                content.Navigate(typeof(About));
+                contentFrame.Navigate(typeof(About));
             }
         }
 

@@ -1,20 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -28,12 +17,12 @@ namespace Ntruk.GUI
         public PickTarget()
         {
             this.InitializeComponent();
-            image.Height = backgruond.Height;
+            contentImage.Height = mainPanel.Height;
         }
 
         public static string Folder;
 
-        private async void open_Click(object sender, RoutedEventArgs e)
+        private async void OpenButton_Click(object sender, RoutedEventArgs e)
         {
             FolderPicker picker = new FolderPicker
             {
@@ -45,13 +34,13 @@ namespace Ntruk.GUI
             if (folder != null)
             {
                 StorageApplicationPermissions.FutureAccessList.AddOrReplace("TargetFolderToken", folder);
-                type.Text = folder.Path;
+                inputBox.Text = folder.Path;
             }
         }
 
-        private void type_TextChanged(object sender, TextChangedEventArgs e)
+        private void InputBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Folder = type.Text;
+            Folder = inputBox.Text;
         }
     }
 }

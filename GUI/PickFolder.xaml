@@ -8,34 +8,36 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
 
-    <RelativePanel x:Name="main"
+    <RelativePanel x:Name="mainPanel"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Background="#1f7f7f7f"
                    CornerRadius="8">
-        <TextBlock x:Name="tip"
+        <TextBlock x:Name="tipText"
                    Text="请选择一个Minecraft文件夹："
                    Margin="16, 16, 16, 8"/>
         <Button RelativePanel.AlignRightWithPanel="True"
                 Margin="8, 10, 16, 8"
                 Content="使用默认Minecraft文件夹*"
-                Click="default_Click"
-                IsEnabled="False"/>
-        <TextBox x:Name="type"
-                 RelativePanel.Below="tip"
+                Click="DefaultButton_Click"
+                IsEnabled="False"
+                x:Name="defaultButton"/>
+        <TextBox x:Name="inputBox"
+                 RelativePanel.Below="tipText"
                  Margin="16, 8, 8, 16"
                  Width="350"
-                 TextChanged="type_TextChanged"/>
-        <Button x:Name="open"
+                 TextChanged="InputBox_TextChanged"/>
+        <Button x:Name="openButton"
                 Content="打开..."
-                RelativePanel.RightOf="type"
-                RelativePanel.Below="tip"
+                RelativePanel.RightOf="inputBox"
+                RelativePanel.Below="tipText"
                 Margin="8, 8, 16, 16"
-                Click="open_Click"/>
-        <TextBlock RelativePanel.Below="type"
+                Click="OpenButton_Click"/>
+        <TextBlock RelativePanel.Below="inputBox"
                    TextWrapping="WrapWholeWords"
                    Margin="16, 8, 16, 16"
-                   IsTextSelectionEnabled="True">
+                   IsTextSelectionEnabled="True"
+                   x:Name="tempText">
             *我们遇到了一些未知问题。“使用默认Minecraft文件夹”目前不可用。<LineBreak/>你可以在“选择文件夹”的地址栏中输入：<LineBreak/>“C:\Users\*你的用户名*\AppData\Roaming\.minecraft”以达到同样的效果。
         </TextBlock>
     </RelativePanel>

@@ -1,6 +1,6 @@
-﻿using Windows.UI.Xaml;
+﻿using Ntruk.API;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Ntruk.API;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -14,16 +14,16 @@ namespace Ntruk.GUI
         public InitPage()
         {
             this.InitializeComponent();
-            step.Navigate(typeof(PickFolder));
-            back.IsEnabled = false;
-            count = 0;
+            contentFrame.Navigate(typeof(PickFolder));
+            backButton.IsEnabled = false;
+            Count = 0;
         }
 
-        public static int count;
+        public static int Count;
 
-        private void next_Click(object sender, RoutedEventArgs e)
+        private void NextBotton_Click(object sender, RoutedEventArgs e)
         {
-            switch (count)
+            switch (Count)
             {
                 case 0:
                     if (PickFolder.Folder == null || PickFolder.Folder == string.Empty)
@@ -31,10 +31,10 @@ namespace Ntruk.GUI
                         ContentDialogHelper.ShowTipDialog("请选择一个Minecraft文件夹。");
                         break;
                     }
-                    step.Navigate(typeof(PickVersion));
-                    back.IsEnabled = true;
-                    title.Text = "初始化（2/3）";
-                    count = 1;
+                    contentFrame.Navigate(typeof(PickVersion));
+                    backButton.IsEnabled = true;
+                    titleText.Text = "初始化（2/3）";
+                    Count = 1;
                     break;
                 case 1:
                     if (PickVersion.Version == null || PickVersion.Version == string.Empty)
@@ -42,9 +42,9 @@ namespace Ntruk.GUI
                         ContentDialogHelper.ShowTipDialog("请选择一个Minecraft版本。");
                         break;
                     }
-                    step.Navigate(typeof(PickTarget));
-                    title.Text = "初始化（3/3）";
-                    count = 2;
+                    contentFrame.Navigate(typeof(PickTarget));
+                    titleText.Text = "初始化（3/3）";
+                    Count = 2;
                     break;
                 case 2:
                     if (PickTarget.Folder == null || PickTarget.Folder == string.Empty)
@@ -55,28 +55,28 @@ namespace Ntruk.GUI
                     IniHelper.WriteIni("Minecraft", "Folder", PickFolder.Folder, MainPage.ConfigDataPath);
                     IniHelper.WriteIni("Minecraft", "Version", PickVersion.Version, MainPage.ConfigDataPath);
                     PageHelper.NavigateOneselfTo(this, typeof(UserMainPage));
-                    count = 3;
+                    Count = 3;
                     break;
                 default:
                     break;
             }
         }
 
-        private void back_Click(object sender, RoutedEventArgs e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            switch (count)
+            switch (Count)
             {
                 case 1:
-                    step.Navigate(typeof(PickFolder));
-                    back.IsEnabled = false;
-                    title.Text = "初始化（1/3）";
-                    count = 0;
+                    contentFrame.Navigate(typeof(PickFolder));
+                    backButton.IsEnabled = false;
+                    titleText.Text = "初始化（1/3）";
+                    Count = 0;
                     PickFolder.Folder = string.Empty;
                     break;
                 case 2:
-                    step.Navigate(typeof(PickVersion));
-                    title.Text = "初始化（2/3）";
-                    count = 1;
+                    contentFrame.Navigate(typeof(PickVersion));
+                    titleText.Text = "初始化（2/3）";
+                    Count = 1;
                     PickVersion.Version = string.Empty;
                     break;
                 default:

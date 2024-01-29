@@ -10,29 +10,29 @@
 
     <Page.Resources>
         <DataTemplate x:Key="HomeObj" x:DataType="na:HomeObj">
-            <RelativePanel MinWidth="300" Height="72">
-                <Image x:Name="icon"
+            <RelativePanel MinWidth="300" Height="72" x:Name="ItemPanel">
+                <Image x:Name="iconImage"
                        Source="{x:Bind IconLocation}"
                        Width="64"
                        Height="64"
                        RelativePanel.AlignLeftWithPanel="True"
                        Margin="4, 4, 2, 4"/>
-                <TextBlock x:Name="title"
+                <TextBlock x:Name="titleText"
                            Text="{x:Bind Title}"
-                           RelativePanel.RightOf="icon"
+                           RelativePanel.RightOf="iconImage"
                            Margin="2, 4, 4, 2"
                            FontWeight="Bold"
                            FontSize="16"/>
-                <TextBlock x:Name="description"
+                <TextBlock x:Name="descriptionText"
                            Text="{x:Bind Description}"
-                           RelativePanel.Below="title"
-                           RelativePanel.RightOf="icon"
+                           RelativePanel.Below="titleText"
+                           RelativePanel.RightOf="iconImage"
                            Foreground="#7f7f7f"
                            FontSize="12"/>
             </RelativePanel>
         </DataTemplate>
     </Page.Resources>
-    <Grid>
+    <Grid x:Name="mainPanel">
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
             <RowDefinition/>
@@ -40,13 +40,14 @@
         <TextBlock Text="Ntruk"
                    FontSize="50"
                    Grid.Row="0"
-                   VerticalAlignment="Center"/>
-        <GridView x:Name="content"
+                   VerticalAlignment="Center"
+                   x:Name="titleText"/>
+        <GridView x:Name="contentView"
                   Grid.Row="1"
                   SelectionMode="Single"
                   ItemTemplate="{StaticResource HomeObj}"
                   IsItemClickEnabled="True"
-                  SelectionChanged="content_SelectionChanged">
+                  SelectionChanged="ContentView_SelectionChanged">
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
                     <Setter Property="Margin" Value="4"/>

@@ -7,17 +7,18 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid x:Name="mainPanel">
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="200"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid CornerRadius="8"
-              Background="#1f7f7f7f">
+              Background="#1f7f7f7f"
+              x:Name="titlePanel">
             <TextBlock Text="关于"
                        FontSize="40"
                        VerticalAlignment="Center"
-                       Margin="16"/>
+                       x:Name="titleText"/>
         </Grid>
     </Grid>
 </Page>

@@ -8,20 +8,21 @@
     mc:Ignorable="d"
     Loaded="Page_Loaded">
 
-    <RelativePanel x:Name="main"
+    <RelativePanel x:Name="mainPanel"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
                Background="#0affffff"
                CornerRadius="8">
-        <ComboBox x:Name="pick"
+        <ComboBox x:Name="pickBox"
                   Margin="16, 16, 16, 8"
                   Width="200"
                   Header="请选择一个Minecraft版本："
                   PlaceholderText="版本..."
-                  SelectionChanged="pick_SelectionChanged">
+                  SelectionChanged="PickBox_SelectionChanged">
         </ComboBox>
-        <TextBlock RelativePanel.Below="pick"
+        <TextBlock RelativePanel.Below="pickBox"
                    Text="*仅支持正式版本与部分的子版本。"
-                   Margin="16, 8, 16, 16"/>
+                   Margin="16, 8, 16, 16"
+                   x:Name="tipText"/>
     </RelativePanel>
 </Page>

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Ntruk.API;
+using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
-using Ntruk.API;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -22,10 +22,10 @@ namespace Ntruk.GUI
                 Description = "一种更快、更准、更直观地获取Minecraft资源地方法。",
             };
             homeObjs.Add(obj1);
-            content.ItemsSource = homeObjs;
+            contentView.ItemsSource = homeObjs;
         }
 
-        private void content_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ContentView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             PageHelper.NavigateOneselfTo(this, typeof(MCRE));
         }

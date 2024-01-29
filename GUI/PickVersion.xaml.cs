@@ -62,7 +62,7 @@ namespace Ntruk.GUI
 
                 }
                 Array.Sort(versions);
-                pick.ItemsSource = versions;
+                pickBox.ItemsSource = versions;
             }
             catch (Exception)
             {
@@ -78,7 +78,7 @@ namespace Ntruk.GUI
             
         }
 
-        private void pick_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void PickBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Version = (sender as ComboBox).SelectedItem.ToString();
         }

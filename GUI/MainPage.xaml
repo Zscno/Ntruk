@@ -9,8 +9,8 @@
     mc:Ignorable="d"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True">
 
-    <Grid>
-        <Frame x:Name="backPage"
+    <Grid x:Name="mainPanel">
+        <Frame x:Name="contentFrame"
                Margin="8"/>
     </Grid>
 </Page>

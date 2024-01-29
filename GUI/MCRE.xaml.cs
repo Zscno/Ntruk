@@ -27,14 +27,14 @@ namespace Ntruk.GUI
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            loading.IsActive = true;
+            loadingAnimation.IsActive = true;
             await GetMCREData();
             if (Objs == null)
             {
                 ContentDialogHelper.ShowErrorDialog("我们这里出了些问题：" + ExMessage + "\n请根据以上信息尝试解决问题。\n如还是有问题可以反馈到Github。");
             }
-            content.ItemsSource = Objs;
-            loading.IsActive = false;
+            contentView.ItemsSource = Objs;
+            loadingAnimation.IsActive = false;
         }
 
         List<MCREObj> Objs;
@@ -122,19 +122,19 @@ namespace Ntruk.GUI
             }
         }
 
-        private async void oK_Click(object sender, RoutedEventArgs e)
+        private async void DetermineButton_Click(object sender, RoutedEventArgs e)
         {
-            loading.IsActive = true;
-            oK.IsEnabled = false;
-            int[] ints = new int[content.SelectedItems.Count];
+            loadingAnimation.IsActive = true;
+            determineButton.IsEnabled = false;
+            int[] ints = new int[contentView.SelectedItems.Count];
             int count = -1;
-            if (content.SelectedItems.Count == 0)
+            if (contentView.SelectedItems.Count == 0)
             {
                 ContentDialogHelper.ShowTipDialog("请选择要提取的资源。");
             }
             else
             {
-                foreach (var item in content.SelectedItems)
+                foreach (var item in contentView.SelectedItems)
                 {
                     if (item is GridViewItem gridViewItem)
                     {
@@ -209,8 +209,8 @@ namespace Ntruk.GUI
                     }
                 }
             }
-            loading.IsActive = false;
-            oK.IsEnabled = true;
+            loadingAnimation.IsActive = false;
+            determineButton.IsEnabled = true;
             ContentDialogHelper.ShowTipDialog("提取完毕。");
         }
 

@@ -7,22 +7,24 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid x:Name="mainPanel">
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="200"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid CornerRadius="8"
-          Background="#1f7f7f7f"
-          Grid.Row="0">
+              Background="#1f7f7f7f"
+              Grid.Row="0"
+              x:Name="titlePanel">
             <TextBlock Text="设置"
-                   FontSize="40"
-                   VerticalAlignment="Center"
-                   Margin="16"/>
+                       FontSize="40"
+                       VerticalAlignment="Center"
+                       x:Name="titleText"/>
         </Grid>
-        <Pivot Grid.Row="1">
-            <PivotItem Header="Minecraft">
-                <RelativePanel>
+        <Pivot Grid.Row="1" x:Name="contentPivot">
+            <PivotItem Header="Minecraft"
+                       x:Name="minecraftItem">
+                <RelativePanel x:Name="itemPanel">
                     <TextBlock Text="目前使用的游戏文件夹："
                            x:Name="currentFolder"
                            Margin="0, 16, 16, 8"/>

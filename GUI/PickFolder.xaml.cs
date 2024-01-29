@@ -22,7 +22,7 @@ namespace Ntruk.GUI
 
         public static string Folder;
 
-        private async void open_Click(object sender, RoutedEventArgs e)
+        private async void OpenButton_Click(object sender, RoutedEventArgs e)
         {
             FolderPicker picker = new FolderPicker
             {
@@ -34,18 +34,18 @@ namespace Ntruk.GUI
             if (folder != null)
             {
                 StorageApplicationPermissions.FutureAccessList.AddOrReplace("MinecraftFolderToken", folder);
-                type.Text = folder.Path;
+                inputBox.Text = folder.Path;
             }
         }
 
-        private void default_Click(object sender, RoutedEventArgs e)
+        private void DefaultButton_Click(object sender, RoutedEventArgs e)
         {
-            type.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".minecraft");
+            inputBox.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".minecraft");
         }
 
-        private void type_TextChanged(object sender, TextChangedEventArgs e)
+        private void InputBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Folder = type.Text;
+            Folder = inputBox.Text;
         }
     }
 }

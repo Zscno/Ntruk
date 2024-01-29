@@ -17,7 +17,8 @@
             <muxc:NavigationViewItem Content="Minecraft资源提取器"
                                      x:Name="mCRE">
                 <muxc:NavigationViewItem.Icon>
-                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE77f;"/>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE77f;"
+                              x:Name="mCREIcon"/>
                 </muxc:NavigationViewItem.Icon>
             </muxc:NavigationViewItem>
         </muxc:NavigationView.MenuItems>
@@ -25,11 +26,12 @@
             <muxc:NavigationViewItem Content="关于"
                                      x:Name="about">
                 <muxc:NavigationViewItem.Icon>
-                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE946;"/>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE946;"
+                              x:Name="aboutIcon"/>
                 </muxc:NavigationViewItem.Icon>
             </muxc:NavigationViewItem>
         </muxc:NavigationView.FooterMenuItems>
-        <Frame x:Name="content"
+        <Frame x:Name="contentFrame"
                Navigated="content_Navigated"/>
     </muxc:NavigationView>
 </Page>

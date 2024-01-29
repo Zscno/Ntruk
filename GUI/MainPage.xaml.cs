@@ -18,11 +18,11 @@ namespace Ntruk.GUI
             ConfigDataPath = Path.Combine(LocalDataFolder, "config.ini");
             if (!File.Exists(ConfigDataPath))
             {
-                backPage.Navigate(typeof(InitPage));
+                contentFrame.Navigate(typeof(InitPage));
             }
             else
             {
-                backPage.Navigate(typeof(UserMainPage));
+                contentFrame.Navigate(typeof(UserMainPage));
             }
         }
 

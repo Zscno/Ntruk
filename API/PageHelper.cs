@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Media;
 namespace Ntruk.API
 {
     /// <summary>
-    /// 关于Page的常用操作。
+    /// 关于<c>Page</c>与<c>Frame</c>的<c>Navigate</c>操作。
     /// </summary>
     internal class PageHelper
     {
