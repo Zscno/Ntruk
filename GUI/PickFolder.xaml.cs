@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
@@ -36,11 +35,6 @@ namespace Ntruk.GUI
                 StorageApplicationPermissions.FutureAccessList.AddOrReplace("MinecraftFolderToken", folder);
                 inputBox.Text = folder.Path;
             }
-        }
-
-        private void DefaultButton_Click(object sender, RoutedEventArgs e)
-        {
-            inputBox.Text = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".minecraft");
         }
 
         private void InputBox_TextChanged(object sender, TextChangedEventArgs e)

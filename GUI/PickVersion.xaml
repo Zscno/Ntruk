@@ -7,22 +7,48 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Loaded="Page_Loaded">
-
-    <RelativePanel x:Name="mainPanel"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center"
-               Background="#0affffff"
-               CornerRadius="8">
-        <ComboBox x:Name="pickBox"
-                  Margin="16, 16, 16, 8"
-                  Width="200"
-                  Header="请选择一个Minecraft版本："
-                  PlaceholderText="版本..."
-                  SelectionChanged="PickBox_SelectionChanged">
-        </ComboBox>
-        <TextBlock RelativePanel.Below="pickBox"
-                   Text="*仅支持正式版本与部分的子版本。"
-                   Margin="16, 8, 16, 16"
-                   x:Name="tipText"/>
-    </RelativePanel>
+    <Grid x:Name="mainPanel">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Image
+            Source="/Images/PickVersion.png"
+            Grid.Column="0"
+            x:Name="contentImage"/>
+        <RelativePanel
+            x:Name="contentPanel"
+            Grid.Column="1"
+            Background="#1f7f7f7f"
+            CornerRadius="8">
+            <TextBlock
+                FontSize="30"
+                x:Name="titleText"
+                Text="选择你的Minecraft版本"
+                Margin="20, 20, 20, 10"/>
+            <TextBlock
+                x:Name="contentText"
+                Foreground="#7f7f7f"
+                Text="我们的所有功能将会以这个版本为目标。以后你可以在设置中修改它。"
+                RelativePanel.Below="titleText"
+                Margin="20, 10, 20, 20"/>
+            <TextBlock/>
+            <RelativePanel
+                x:Name="mainContentPanel"
+                RelativePanel.AlignHorizontalCenterWithPanel="True"
+                RelativePanel.AlignVerticalCenterWithPanel="True">
+                <ComboBox x:Name="pickBox"
+                    Margin="16, 16, 16, 8"
+                    Width="200"
+                    Header="请选择一个Minecraft版本："
+                    PlaceholderText="版本..."
+                    SelectionChanged="PickBox_SelectionChanged">
+                </ComboBox>
+                <TextBlock RelativePanel.Below="pickBox"
+                    Text="*仅支持正式版本与部分的子版本。"
+                    Margin="16, 8, 16, 16"
+                    x:Name="tipText"/>
+            </RelativePanel>
+        </RelativePanel>
+    </Grid>
 </Page>

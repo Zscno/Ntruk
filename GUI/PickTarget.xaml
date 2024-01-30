@@ -15,26 +15,39 @@
         <Image Source="/Images/PickTarget.png"
                Grid.Column="0"
                x:Name="contentImage"/>
-        <RelativePanel x:Name="main"
+        <RelativePanel x:Name="contentPanel"
                        Grid.Column="1"
                        CornerRadius="8"
-                       Background="#1f7f7f7f"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center">
-            <TextBlock x:Name="tipText"
-                       Text="请选择目标文件夹（我们的会将文件提取到此文件夹或其子文件夹）："
+                       Background="#1f7f7f7f">
+            <TextBlock
+                FontSize="30"
+                x:Name="titleText"
+                Text="选择你的目标文件夹"
+                Margin="20, 20, 20, 10"/>
+            <TextBlock
+                x:Name="contentText"
+                Foreground="#7f7f7f"
+                Text="我们的所有功能将会把输出结果存储到此文件夹或其子文件夹。以后你可以在设置中修改它。"
+                RelativePanel.Below="titleText"
+                Margin="20, 10, 20, 20"/>
+            <RelativePanel x:Name="MainContentPanel"
+                           RelativePanel.AlignHorizontalCenterWithPanel="True"
+                           RelativePanel.AlignVerticalCenterWithPanel="True">
+                <TextBlock x:Name="tipText"
+                       Text="请选择目标文件夹："
                        Margin="16, 16, 16, 8"/>
-            <TextBox x:Name="inputBox"
+                <TextBox x:Name="inputBox"
                      RelativePanel.Below="tipText"
                      Margin="16, 8, 8, 16"
                      Width="350"
                      TextChanged="InputBox_TextChanged"/>
-            <Button x:Name="openButton"
+                <Button x:Name="openButton"
                     Content="打开..."
                     RelativePanel.RightOf="inputBox"
                     RelativePanel.Below="tipText"
                     Margin="8, 8, 16, 16"
                     Click="OpenButton_Click"/>
+            </RelativePanel>
         </RelativePanel>
     </Grid>
 </Page>

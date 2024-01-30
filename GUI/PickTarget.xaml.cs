@@ -17,7 +17,6 @@ namespace Ntruk.GUI
         public PickTarget()
         {
             this.InitializeComponent();
-            contentImage.Height = mainPanel.Height;
         }
 
         public static string Folder;
