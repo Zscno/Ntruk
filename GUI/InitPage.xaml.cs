@@ -44,6 +44,7 @@ namespace Ntruk.GUI
                     }
                     contentFrame.Navigate(typeof(PickTarget));
                     titleText.Text = "初始化（3/3）";
+                    nextButton.Content = "完成";
                     Count = 2;
                     break;
                 case 2:
