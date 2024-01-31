@@ -164,6 +164,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitignore" />
     <Content Include="Assets\BadgeLogo.scale-100.png" />
     <Content Include="Assets\BadgeLogo.scale-125.png" />
     <Content Include="Assets\BadgeLogo.scale-150.png" />
@@ -224,6 +225,7 @@
     <Content Include="Images\Ntruk-256x256.png" />
     <Content Include="Images\PickTarget.png" />
     <Content Include="Images\PickVersion.png" />
+    <Content Include="LICENSE.txt" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -290,6 +292,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="README.md" />
     <None Include="Standard.md" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
