@@ -42,6 +42,15 @@ Page控件下的内容面板|contentPanel
 
 应用程序配置文件的路径：`C:\Users\zscNo\AppData\Local\Packages\14929520-b2d0-4c0a-ab07-7df36cf298fe_30zf6cwqqe7zw\LocalState`。
 
+应用程序版本控制
+
+版本名称|版本控制
+|:-:|:-:|
+Major|重大更新（UI风格、全新功能）
+Minor|普通更新（完善功能、功能改进）
+Build|重大补丁（全局性错误）
+Revision|普通补丁（界面级错误）
+
 ## 4.API
 
 所有API类型的访问修饰符必须为`internal`。
