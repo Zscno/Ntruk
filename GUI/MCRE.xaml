@@ -12,7 +12,7 @@
 
     <Page.Resources>
         <DataTemplate x:Key="MCREObj" x:DataType="na:MCREObj">
-            <RelativePanel x:Name="itemPanel" Width="150" Height="100" Tag="{x:Bind Tag}">
+            <RelativePanel x:Name="itemPanel" Width="150" Height="100">
                 <FontIcon FontFamily="Segoe Fluent Icons"  FontSize="64"
                           x:Name="icon"
                           RelativePanel.AlignHorizontalCenterWithPanel="True"
@@ -51,7 +51,7 @@
                   x:Name="contentView"
                   SelectionMode="Multiple"
                   ItemTemplate="{StaticResource MCREObj}"
-                  IsItemClickEnabled="True">
+                  IsItemClickEnabled="False">
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
                     <Setter Property="Margin" Value="4"/>

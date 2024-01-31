@@ -118,6 +118,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="API\MinecraftHelper.cs" />
     <Compile Include="GUI\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>

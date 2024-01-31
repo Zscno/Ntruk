@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Ntruk.API;
+using System;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using Windows.Storage;
+using System.Collections.Generic;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -33,49 +26,21 @@ namespace Ntruk.GUI
         {
             try
             {
-                DirectoryInfo directory = new DirectoryInfo(Path.Combine(PickFolder.Folder, "assets", "indexes"));
-                FileInfo[] files = directory.GetFiles();
-                string[] versions = new string[files.Length];
-                for (int i = 0; i < files.Length; i++)
+                StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(Path.Combine(PickFolder.Folder, "assets", "indexes"));
+                IReadOnlyList<StorageFile> files = await folder.GetFilesAsync();
+                string[] versions = new string[files.Count];
+                for (int i = 0; i < files.Count; i++)
                 {
-                    switch (Path.GetFileNameWithoutExtension(files[i].FullName))
-                    {
-                        case "2":
-                            versions[i] = "1.19.3";
-                            break;
-                        case "3":
-                            versions[i] = "1.19.4";
-                            break;
-                        case "5":
-                            versions[i] = "1.20";
-                            break;
-                        case "8":
-                            versions[i] = "1.20.2";
-                            break;
-                        case "12":
-                            versions[i] = "1.20.3";
-                            break;
-                        default:
-                            versions[i] = Path.GetFileNameWithoutExtension(files[i].FullName);
-                            break;
-                    }
-
+                    MinecraftHelper.GetVersion(Path.GetFileNameWithoutExtension(files[i].Path));
                 }
                 Array.Sort(versions);
                 pickBox.ItemsSource = versions;
             }
             catch (Exception)
             {
-                ContentDialog dialog = new ContentDialog()
-                {
-                    Title = "提示",
-                    PrimaryButtonText = "确定",
-                    DefaultButton = ContentDialogButton.Primary,
-                    Content = "请在摁下“打开...”后弹出的窗口中选择文件夹或在其中的地址栏中填写路径。",
-                };
-                await dialog.ShowAsync();
+                PageHelper.NavigateOneselfTo(this, typeof(PickFolder));
+                ContentDialogHelper.ShowTipDialog("请重新选择一个Minecraft文件夹。\n目前选择的文件夹不起作用。");
             }
-            
         }
 
         private void PickBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -32,6 +32,6 @@
             </muxc:NavigationViewItem>
         </muxc:NavigationView.FooterMenuItems>
         <Frame x:Name="contentFrame"
-               Navigated="content_Navigated"/>
+               Navigated="ContentFrame_Navigated"/>
     </muxc:NavigationView>
 </Page>

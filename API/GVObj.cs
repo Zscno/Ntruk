@@ -15,6 +15,6 @@ namespace Ntruk.API
         public string Icon { get; set; }
         public SolidColorBrush IconColor { get; set; }
         public string Hash {  get; set; }
-        public int Tag {  get; set; }
+        public string Name { get; set; }
     }
 }

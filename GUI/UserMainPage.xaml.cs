@@ -37,7 +37,7 @@ namespace Ntruk.GUI
             }
         }
 
-        private void content_Navigated(object sender, NavigationEventArgs e)
+        private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
         {
             switch (e.Content.ToString())
             {
