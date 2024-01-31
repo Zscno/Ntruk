@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls">
     <muxc:NavigationView x:Name="mainPanel"
-                         SelectionChanged="NavigationView_SelectionChanged"
+                         SelectionChanged="MainPanel_SelectionChanged"
                          IsBackButtonVisible="Collapsed">
         <muxc:NavigationView.MenuItems>
             <muxc:NavigationViewItem Content="主页"

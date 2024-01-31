@@ -17,13 +17,9 @@ namespace Ntruk.GUI
             mainPanel.SelectedItem = home;
         }
 
-        private void NavigationView_SelectionChanged(muxc.NavigationView sender, muxc.NavigationViewSelectionChangedEventArgs args)
+        private void MainPanel_SelectionChanged(muxc.NavigationView sender, muxc.NavigationViewSelectionChangedEventArgs args)
         {
-            if (args.IsSettingsSelected)
-            {
-                contentFrame.Navigate(typeof(Settings));
-            }
-            else if (args.SelectedItem == home)
+            if (args.SelectedItem == home)
             {
                 contentFrame.Navigate(typeof(Home));
             }
@@ -35,23 +31,29 @@ namespace Ntruk.GUI
             {
                 contentFrame.Navigate(typeof(About));
             }
+            else if (args.IsSettingsSelected)
+            {
+                contentFrame.Navigate(typeof(Settings));
+            }
         }
 
         private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
         {
             switch (e.Content.ToString())
             {
-                case "Ntruk.Home":
+                case "Ntruk.GUI.Home":
                     mainPanel.SelectedItem = home;
                     break;
-                case "Ntruk.MCRE":
+                case "Ntruk.GUI.MCRE":
                     mainPanel.SelectedItem = mCRE;
                     break;
-                case "Ntruk.About":
+                case "Ntruk.GUI.About":
                     mainPanel.SelectedItem = about;
                     break;
-                default:
+                case "Ntruk.GUI.Settings":
                     mainPanel.SelectedItem = mainPanel.SettingsItem;
+                    break;
+                default:
                     break;
             }
         }
