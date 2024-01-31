@@ -31,7 +31,7 @@ namespace Ntruk.GUI
                 string[] versions = new string[files.Count];
                 for (int i = 0; i < files.Count; i++)
                 {
-                    MinecraftHelper.GetVersion(Path.GetFileNameWithoutExtension(files[i].Path));
+                    versions[i] = MinecraftHelper.GetVersion(files[i].Path);
                 }
                 Array.Sort(versions);
                 pickBox.ItemsSource = versions;

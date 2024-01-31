@@ -48,8 +48,8 @@ Page控件下的内容面板|contentPanel
 |:-:|:-:|
 Major|重大更新（UI风格、全新功能）
 Minor|普通更新（完善功能、功能改进）
-Build|重大补丁（全局性错误）
-Revision|普通补丁（界面级错误）
+Build|所有补丁（各种错误）
+Revision|非程序更新（与程序本体无关的更新）
 
 ## 4.API
 

@@ -292,6 +292,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Ntruk_TemporaryKey.pfx" />
     <None Include="README.md" />
     <None Include="Standard.md" />
   </ItemGroup>
