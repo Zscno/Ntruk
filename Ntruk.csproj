@@ -141,6 +141,7 @@
       <DependentUpon>MCRE.xaml</DependentUpon>
     </Compile>
     <Compile Include="API\PageHelper.cs" />
+    <Compile Include="API\PickerHelper.cs" />
     <Compile Include="GUI\PickFolder.xaml.cs">
       <DependentUpon>PickFolder.xaml</DependentUpon>
     </Compile>
@@ -217,6 +218,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <Content Include="Images\AboutBackground.jpg" />
     <Content Include="Images\BlackAndWhiteContrast.png" />
+    <Content Include="Images\SettingsBackground.png" />
     <Content Include="Images\Ntruk-Dark-400x400.png" />
     <Content Include="Images\Ntruk-Light-400x400.png" />
     <Content Include="Images\PickFolder.png" />

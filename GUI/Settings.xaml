@@ -5,17 +5,20 @@
     xmlns:local="using:Ntruk"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
 
     <Grid x:Name="mainPanel">
         <Grid.RowDefinitions>
             <RowDefinition Height="200"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid CornerRadius="8"
-              Background="#1f7f7f7f"
-              Grid.Row="0"
+        <Grid Grid.Row="0"
               x:Name="titlePanel">
+            <Image
+                x:Name="titleImage"
+                Source="/Images/SettingsBackground.png"
+                Stretch="UniformToFill"/>
             <TextBlock Text="设置"
                        FontSize="40"
                        VerticalAlignment="Center"
@@ -25,24 +28,24 @@
             <PivotItem Header="Minecraft"
                        x:Name="minecraftItem">
                 <RelativePanel x:Name="itemPanel">
-                    <TextBlock Text="目前使用的游戏文件夹："
-                           x:Name="currentFolder"
-                           Margin="0, 16, 16, 8"/>
+                    <TextBox
+                        x:Name="currentFolder"
+                        Header="目前使用的游戏文件夹："
+                        Margin="0, 16, 8, 8"
+                        Width="300"/>
                     <Button x:Name="changeFolder"
                             Content="修改"
-                            RelativePanel.AlignRightWithPanel="True"
-                            Margin="16, 16, 0, 8"
-                            IsEnabled="False"/>
-                    <TextBlock Text="目前使用的游戏版本："
-                           x:Name="currentVersion"
-                           RelativePanel.Below="changeFolder"
-                           Margin="0, 8, 16, 8"/>
-                    <Button x:Name="changeVersion"
-                            Content="修改"
-                            RelativePanel.AlignRightWithPanel="True"
-                            RelativePanel.Below="changeFolder"
-                            Margin="16, 8, 0, 8"
-                            IsEnabled="False"/>
+                            RelativePanel.RightOf="currentFolder"
+                            RelativePanel.AlignBottomWith="currentFolder"
+                            Margin="8, 16, 0, 8"
+                            Click="ChangeFolder_Click"/>
+                    <ComboBox
+                        Header="目前使用的游戏版本："
+                        x:Name="currentVersion"
+                        RelativePanel.Below="changeFolder"
+                        Margin="0, 8, 16, 8"
+                        Width="300"
+                        SelectionChanged="CurrentVersion_SelectionChanged"/>
                 </RelativePanel>
             </PivotItem>
         </Pivot>

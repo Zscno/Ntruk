@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ntruk.API;
+using System;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
@@ -23,18 +24,7 @@ namespace Ntruk.GUI
 
         private async void OpenButton_Click(object sender, RoutedEventArgs e)
         {
-            FolderPicker picker = new FolderPicker
-            {
-                ViewMode = PickerViewMode.Thumbnail,
-                SuggestedStartLocation = PickerLocationId.Desktop
-            };
-            picker.FileTypeFilter.Add("*");
-            StorageFolder folder = await picker.PickSingleFolderAsync();
-            if (folder != null)
-            {
-                StorageApplicationPermissions.FutureAccessList.AddOrReplace("MinecraftFolderToken", folder);
-                inputBox.Text = folder.Path;
-            }
+            inputBox.Text = (await PickerHelper.UsePickerGetSingleFolder("MinecraftFolderToken")).Path;
         }
 
         private void InputBox_TextChanged(object sender, TextChangedEventArgs e)

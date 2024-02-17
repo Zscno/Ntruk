@@ -7,7 +7,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
-using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -32,7 +31,7 @@ namespace Ntruk.GUI
             await GetMCREData();
             if (Objs == null)
             {
-                ContentDialogHelper.ShowErrorDialog("我们这里出了些问题：" + ExMessage + "\n请根据以上信息尝试解决问题。\n如还是有问题可以反馈到Github。");
+                ContentDialogHelper.ShowErrorDialog("我们这里出了些问题：" + ExMessage + "\n请根据以上信息尝试解决问题。\n如还是有问题可以反馈到Github（在关于界面中）。");
             }
             contentView.ItemsSource = Objs;
             loadingAnimation.IsActive = false;
@@ -71,7 +70,7 @@ namespace Ntruk.GUI
                         Title = Path.GetFileName(objProperty.Name),
                         Icon = tuple.Item1,
                         IconColor = tuple.Item2,
-                        Name = objProperty.Name.Split('.')[0],
+                        Name = objProperty.Name,
                     };
                     Objs.Add(obj);
                 }
@@ -99,6 +98,7 @@ namespace Ntruk.GUI
             ContentDialogHelper.ShowTipDialog("提取完毕。");
         }
 
+        // 在下一次更新中将此方法移动至PageHelper类型中。
         private static RelativePanel FindChild<RelativePanel>(DependencyObject depObj) where RelativePanel : DependencyObject
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
@@ -123,8 +123,8 @@ namespace Ntruk.GUI
         private async static Task CopyFile(List<MCREObj> targetObjs)
         {
 
-            StorageFolder folder = await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("MinecraftFolderToken");
-            StorageFolder objsFolder = await StorageFolder.GetFolderFromPathAsync(Path.Combine(folder.Path, "assets", "objects"));
+            StorageFolder mcFolder = await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("MinecraftFolderToken");
+            StorageFolder objsFolder = await StorageFolder.GetFolderFromPathAsync(Path.Combine(mcFolder.Path, "assets", "objects"));
             StorageFolder targetFolder = await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("TargetFolderToken");
             foreach (MCREObj objItem in targetObjs)
             {
@@ -133,8 +133,8 @@ namespace Ntruk.GUI
                 {
                     if (objFile.Name == objItem.Hash)
                     {
-                        string extension = MinecraftHelper.GetExtensionName(objItem.Icon, objItem.Name);
                         string[] temp = objItem.Name.Split("/");
+                        string extension = Path.GetExtension(objItem.Name);
                         string fileName = string.Join('-', temp) + extension;
                         await objFile.CopyAsync(targetFolder, fileName);
                     }

@@ -5,6 +5,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.Storage;
 using System.Collections.Generic;
+using Windows.Storage.AccessCache;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -26,14 +27,8 @@ namespace Ntruk.GUI
         {
             try
             {
-                StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(Path.Combine(PickFolder.Folder, "assets", "indexes"));
-                IReadOnlyList<StorageFile> files = await folder.GetFilesAsync();
-                string[] versions = new string[files.Count];
-                for (int i = 0; i < files.Count; i++)
-                {
-                    versions[i] = MinecraftHelper.GetVersion(files[i].Path);
-                }
-                Array.Sort(versions);
+                StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(Path.Combine((await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("MinecraftFolderToken")).Path, "assets", "indexes"));
+                string[] versions = await MinecraftHelper.GetAllVersions(folder);
                 pickBox.ItemsSource = versions;
             }
             catch (Exception)
