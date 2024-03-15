@@ -216,7 +216,6 @@
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
-    <Content Include="GithubCover.png" />
     <Content Include="Images\AboutBackground.jpg" />
     <Content Include="Images\BlackAndWhiteContrast.png" />
     <Content Include="Images\GithubCover.png" />
