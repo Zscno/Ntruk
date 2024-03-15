@@ -33,6 +33,3 @@ Properties/
 
 #项目文件
 *.csproj
-
-#png图片文件
-*.png
