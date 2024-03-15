@@ -1,9 +1,5 @@
 # Ntruk
 
-A Minecraft assistant application.
+### It is my first complete application.
 
-Go to Microsoft Store to download it!
-
-## FIRST Function: MCRE
-
-This function can help you get Minecraft resources easily and faster.
+### If you are interested in this, you can download these source code, and compile these.

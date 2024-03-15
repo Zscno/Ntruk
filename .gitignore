@@ -27,3 +27,10 @@ Properties/
 
 #解决方案配置文件。
 *.sln
+
+#证书文件。
+*.pfx
+
+#项目文件
+*.csproj
+/.gitignore
