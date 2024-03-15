@@ -218,6 +218,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <Content Include="Images\AboutBackground.jpg" />
     <Content Include="Images\BlackAndWhiteContrast.png" />
+    <Content Include="Images\GithubCover.png" />
     <Content Include="Images\SettingsBackground.png" />
     <Content Include="Images\Ntruk-Dark-400x400.png" />
     <Content Include="Images\Ntruk-Light-400x400.png" />
