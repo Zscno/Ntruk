@@ -33,4 +33,6 @@ Properties/
 
 #项目文件
 *.csproj
-/.gitignore
+
+#png图片文件
+*.png
