@@ -67,7 +67,7 @@ namespace Ntruk.GUI
                     MCREObj obj = new MCREObj()
                     {
                         Hash = objProperty.Value.GetProperty("hash").ToString(),
-                        Title = Path.GetFileName(objProperty.Name),
+                        Title = MinecraftHelper.GetTitle(objProperty.Value.GetProperty("hash").ToString(), objProperty.Name),
                         Icon = tuple.Item1,
                         IconColor = tuple.Item2,
                         Name = objProperty.Name,

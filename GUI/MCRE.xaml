@@ -12,7 +12,7 @@
 
     <Page.Resources>
         <DataTemplate x:Key="MCREObj" x:DataType="na:MCREObj">
-            <RelativePanel x:Name="itemPanel" Width="150" Height="100">
+            <RelativePanel x:Name="itemPanel" Width="175" Height="125">
                 <FontIcon FontFamily="Segoe Fluent Icons"  FontSize="64"
                           x:Name="icon"
                           RelativePanel.AlignHorizontalCenterWithPanel="True"

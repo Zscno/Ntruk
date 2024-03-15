@@ -6,6 +6,7 @@ using System;
 using Windows.Storage;
 using System.Threading.Tasks;
 using Windows.Storage.AccessCache;
+using Windows.ApplicationModel.VoiceCommands;
 
 namespace Ntruk.API
 {
@@ -15,9 +16,9 @@ namespace Ntruk.API
     internal static class MinecraftHelper
     {
         /// <summary>
-        /// 获取从<paramref name="fileName"/>解析出的Minecraft版本号。
+        /// 获取从<paramref hash="fileName"/>解析出的Minecraft版本号。
         /// </summary>
-        /// <param name="fileName">一个正确的Minecraft资源索引文件名。</param>
+        /// <param hash="fileName">一个正确的Minecraft资源索引文件名。</param>
         /// <returns>一个正确的Minecraft版本号。</returns>
         public static string GetVersion(string fileName)
         {
@@ -50,9 +51,9 @@ namespace Ntruk.API
         }
 
         /// <summary>
-        /// 获取从<paramref name="version"/>解析出的Minecraft资源索引文件名。
+        /// 获取从<paramref hash="version"/>解析出的Minecraft资源索引文件名。
         /// </summary>
-        /// <param name="version">一个正确的Minecraft版本号。</param>
+        /// <param hash="version">一个正确的Minecraft版本号。</param>
         /// <returns>一个正确的Minecraft资源索引文件名。</returns>
         public static string GetFileName(string version)
         {
@@ -84,9 +85,9 @@ namespace Ntruk.API
         }
 
         /// <summary>
-        /// 获取从<paramref name="extensionName"/>解析出来的图标资源。
+        /// 获取从<paramref hash="extensionName"/>解析出来的图标资源。
         /// </summary>
-        /// <param name="extensionName">一个正确的Minecraft资源文件扩展名。（最前面有“.”的）</param>
+        /// <param hash="extensionName">一个正确的Minecraft资源文件扩展名。（最前面有“.”的）</param>
         /// <returns>一组正确的图标资源。</returns>
         public static (string, SolidColorBrush) GetIcon(string extensionName)
         {
@@ -120,10 +121,10 @@ namespace Ntruk.API
         }
 
         /// <summary>
-        /// 获取从<paramref name="icon"/>和<paramref name="name"/>解析出来的资源文件扩展名（最前面有“.”的）。
+        /// 获取从<paramref hash="icon"/>和<paramref hash="name"/>解析出来的资源文件扩展名（最前面有“.”的）。
         /// </summary>
-        /// <param name="icon">一个正确的图标资源代码。</param>
-        /// <param name="name">一个正确的资源文件的相对路径。</param>
+        /// <param hash="icon">一个正确的图标资源代码。</param>
+        /// <param hash="name">一个正确的资源文件的相对路径。</param>
         /// <returns>一个正确的资源文件扩展名（最前面有“.”的）。</returns>
         [Obsolete("没用的方法。")]
         public static string GetExtensionName(string icon, string name)
@@ -168,7 +169,7 @@ namespace Ntruk.API
         /// <summary>
         /// 获取指定文件夹中所有Minecraft的版本号。
         /// </summary>
-        /// <param name="folder">一个正确的Minecraft文件夹。</param>
+        /// <param hash="folder">一个正确的Minecraft文件夹。</param>
         /// <returns>指定文件夹中所有Minecraft的版本号。</returns>
         public async static Task<string[]> GetAllVersions(StorageFolder folder)
         {
@@ -180,6 +181,69 @@ namespace Ntruk.API
             }
             Array.Sort(versions);
             return versions;
+        }
+
+        /// <summary>
+        /// 获取从<paramref name="hash"/>解析出来的标题。
+        /// </summary>
+        /// <param name="hash">一个正确的哈希值。</param>
+        /// <param name="fullName">一个正确的全称。</param>
+        /// <returns>一个正确的标题。
+        /// <para>*如果未解析成功将返回<paramref name="fullName"/> </para>
+        /// </returns>
+        public static string GetTitle(string hash, string fullName)
+        {//  为图标图片添加缩略图。。。
+            string title;
+            switch (hash)
+            {
+                case "b62ca8ec10d07e6bf5ac8dae0c8c1d2e6a1e3356":
+                    title = "正式版128x128.png";
+                    break;
+                case "5ff04807c356f1beed0b86ccf659b44b9983e3fa":
+                    title = "正式版16x16.png";
+                    break;
+                case "8030dd9dc315c0381d52c4782ea36c6baf6e8135":
+                    title = "正式版256x256.png";
+                    break;
+                case "af96f55a90eaf11b327f1b5f8834a051027dc506":
+                    title = "正式版32x32.png";
+                    break;
+                case "b80b6e9ff01c78c624df5429e1d3dcd3d5130834":
+                    title = "正式版48x48.png";
+                    break;
+                case "f00657542252858a721e715a2e888a9226404e35":
+                    title = "正式版.icns";
+                    break;
+                case "958d57021d8009de55d6e9e19957a72545e3c30c":
+                    title = "快照版128x128.png";
+                    break;
+                case "949afe72d4d3d785dab52d8baaefeb0e38b3c067":
+                    title = "快照版16x16.png";
+                    break;
+                case "9f84f917a09facacf1235eed3fa77789e4554afb":
+                    title = "快照版256x256.png";
+                    break;
+                case "26ad18d9f4ef0a71255459b5f01b738b81dbc7dc":
+                    title = "快照版32x32.png";
+                    break;
+                case "df274fe57c49ef1af6d218703d805db76a5c8af9":
+                    title = "快照版48x48.png";
+                    break;
+                case "65ebca3306ccd6d7f9d5de8f1cc7a1216d80246d":
+                    title = "快照版.icns";
+                    break;
+                case "f8d4768707b20359f2f7660346bd3a84b6ee27b1":
+                    title = "Minecraft字体-unifont.json";
+                    break;
+                case "109663114d0099c48a703626c8462e07d802e08b":
+                    title = "Minecraft字体-unifont.zip";
+                    break;
+                // TODO
+                default:
+                    title = fullName;
+                    break;
+            }
+            return title;
         }
     }
 }

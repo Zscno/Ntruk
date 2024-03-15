@@ -49,7 +49,7 @@ Page控件下的内容面板|contentPanel
 Major|重大更新（UI风格、全新功能）
 Minor|普通更新（完善功能、功能改进）
 Build|所有补丁（各种错误）
-Revision|非程序更新（与程序本体无关的更新）
+Revision|非程序更新（与程序本体无关的更新、微小更新）
 
 ## 4.API
 
