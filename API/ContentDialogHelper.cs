@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Controls;
 namespace Ntruk.API
 {
     /// <summary>
-    /// 帮助简化<c>ContentDialog</c>的操作。
+    /// 为<typeparamref name="ContentDialog"/>创造更简单的操作方法。
     /// </summary>
     internal static class ContentDialogHelper
     {

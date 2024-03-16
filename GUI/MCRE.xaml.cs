@@ -70,7 +70,7 @@ namespace Ntruk.GUI
                         Title = MinecraftHelper.GetTitle(objProperty.Value.GetProperty("hash").ToString(), objProperty.Name),
                         Icon = tuple.Item1,
                         IconColor = tuple.Item2,
-                        Name = objProperty.Name,
+                        FullName = objProperty.Name,
                     };
                     Objs.Add(obj);
                 }
@@ -133,8 +133,8 @@ namespace Ntruk.GUI
                 {
                     if (objFile.Name == objItem.Hash)
                     {
-                        string[] temp = objItem.Name.Split("/");
-                        string extension = Path.GetExtension(objItem.Name);
+                        string[] temp = objItem.FullName.Split("/");
+                        string extension = Path.GetExtension(objItem.FullName);
                         string fileName = string.Join('-', temp) + extension;
                         await objFile.CopyAsync(targetFolder, fileName);
                     }

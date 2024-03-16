@@ -3,7 +3,7 @@
 namespace Ntruk.API
 {
     /// <summary>
-    /// 关于Ini文件的IO操作。
+    /// 为 <c>Ini File</c> 创造更简单的I/O操作方法。
     /// </summary>
     internal static class IniHelper
     {

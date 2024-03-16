@@ -5,20 +5,18 @@ using System.Collections.Generic;
 using System;
 using Windows.Storage;
 using System.Threading.Tasks;
-using Windows.Storage.AccessCache;
-using Windows.ApplicationModel.VoiceCommands;
 
 namespace Ntruk.API
 {
     /// <summary>
-    /// 关于Minecraft的转换操作。
+    /// 关于Minecraft与程序的转换操作。
     /// </summary>
     internal static class MinecraftHelper
     {
         /// <summary>
-        /// 获取从<paramref hash="fileName"/>解析出的Minecraft版本号。
+        /// 获取从<paramref name="fileName"/>解析出的Minecraft版本号。
         /// </summary>
-        /// <param hash="fileName">一个正确的Minecraft资源索引文件名。</param>
+        /// <param name="fileName">一个正确的Minecraft资源索引文件名。</param>
         /// <returns>一个正确的Minecraft版本号。</returns>
         public static string GetVersion(string fileName)
         {
@@ -51,9 +49,9 @@ namespace Ntruk.API
         }
 
         /// <summary>
-        /// 获取从<paramref hash="version"/>解析出的Minecraft资源索引文件名。
+        /// 获取从<paramref name="version"/>解析出的Minecraft资源索引文件名。
         /// </summary>
-        /// <param hash="version">一个正确的Minecraft版本号。</param>
+        /// <param name="version">一个正确的Minecraft版本号。</param>
         /// <returns>一个正确的Minecraft资源索引文件名。</returns>
         public static string GetFileName(string version)
         {
@@ -85,9 +83,9 @@ namespace Ntruk.API
         }
 
         /// <summary>
-        /// 获取从<paramref hash="extensionName"/>解析出来的图标资源。
+        /// 获取从<paramref name="extensionName"/>解析出来的图标资源。
         /// </summary>
-        /// <param hash="extensionName">一个正确的Minecraft资源文件扩展名。（最前面有“.”的）</param>
+        /// <param name="extensionName">一个正确的Minecraft资源文件扩展名。（最前面有“.”的）</param>
         /// <returns>一组正确的图标资源。</returns>
         public static (string, SolidColorBrush) GetIcon(string extensionName)
         {
@@ -121,12 +119,12 @@ namespace Ntruk.API
         }
 
         /// <summary>
-        /// 获取从<paramref hash="icon"/>和<paramref hash="name"/>解析出来的资源文件扩展名（最前面有“.”的）。
+        /// 获取从<paramref name="icon"/>和<paramref name="name"/>解析出来的资源文件扩展名（最前面有“.”的）。
         /// </summary>
-        /// <param hash="icon">一个正确的图标资源代码。</param>
-        /// <param hash="name">一个正确的资源文件的相对路径。</param>
+        /// <param name="icon">一个正确的图标资源代码。</param>
+        /// <param name="name">一个正确的资源文件的相对路径。</param>
         /// <returns>一个正确的资源文件扩展名（最前面有“.”的）。</returns>
-        [Obsolete("没用的方法。")]
+        [Obsolete("此方法已被弃用。")]
         public static string GetExtensionName(string icon, string name)
         {
             string extensionName = string.Empty;
@@ -169,7 +167,7 @@ namespace Ntruk.API
         /// <summary>
         /// 获取指定文件夹中所有Minecraft的版本号。
         /// </summary>
-        /// <param hash="folder">一个正确的Minecraft文件夹。</param>
+        /// <param name="folder">一个正确的Minecraft文件夹。</param>
         /// <returns>指定文件夹中所有Minecraft的版本号。</returns>
         public async static Task<string[]> GetAllVersions(StorageFolder folder)
         {
