@@ -1,4 +1,4 @@
-﻿# 应用程序项目中的一些固化标准
+﻿# 应用程序项目中的一些标准
 
 ## 1.Minecraft
 
@@ -44,17 +44,13 @@ Page控件下的内容面板|contentPanel
 
 应用程序版本控制
 
-版本名称|版本控制
-|:-:|:-:|
-Major|重大更新（UI风格、全新功能）
-Minor|普通更新（完善功能、功能改进）
-Build|所有补丁（各种错误）
-Revision|非程序更新（与程序本体无关的更新、微小更新）
+版本名称|版本控制|Git注释
+|:-:|:-:|:-:|
+Major|重大更新（用户能一眼看出的变化，如更改UI风格）|Refactoring、Update
+Minor|普通更新（用户使用中能看出的变化，如增加大功能）|Add、Update
+Build|所有补丁（用户很难看出的变化，如完善功能）|Refactoring、Fixed、Update
+Revision|非程序更新（与程序本体无关的更新，如完善自述文件）|Add、Refactoring、Update
 
 ## 4.API
 
 所有API类型的访问修饰符必须为`internal`。
-
-### 名称为`*Helper`的类型
-
-必须有`XML Comments`。且注释内容格式为`关于 *针对的类型* 的 *对本类型中的方法的概括* 操作。`。
