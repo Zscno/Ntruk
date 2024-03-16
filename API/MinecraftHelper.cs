@@ -128,52 +128,6 @@ namespace Ntruk.API
         }
 
         /// <summary>
-        /// 获取从<paramref name="icon"/>和<paramref name="fullName"/>解析出来的资源文件扩展名（最前面有“.”的）。
-        /// </summary>
-        /// <param name="icon">一个正确的图标资源代码。</param>
-        /// <param name="fullName">一个正确的资源文件的相对路径。</param>
-        /// <returns>一个正确的资源文件扩展名（最前面有“.”的）。</returns>
-        [Obsolete("此方法已被弃用。")]
-        public static string GetExtensionName(string icon, string fullName)
-        {
-            string extensionName = string.Empty;
-            switch (icon)
-            {
-                case "\uEB9F":
-                    if (fullName == "icons/minecraft" || fullName == "icons/snapshot/minecraft")
-                    {
-                        extensionName = ".icns";
-                    }
-                    else
-                    {
-                        extensionName = ".png";
-                    }
-                    break;
-                case "\uE8D6":
-                    extensionName = ".ogg";
-                    break;
-                case "\uF012":
-                    extensionName = ".zip";
-                    break;
-                case "\uE8A5":
-                    if (fullName == "pack")
-                    {
-                        extensionName = ".mcmeta";
-                    }
-                    else if (fullName == "minecraft/font/include/unifont" || fullName.Split('/')[1] == "lang" || fullName == "minecraft/sounds")
-                    {
-                        extensionName = ".json";
-                    }
-                    break;
-                default:
-                    extensionName = string.Empty;
-                    break;
-            }
-
-            return extensionName;
-        }
-
-        /// <summary>
         /// 获取指定文件夹中所有Minecraft的版本号。
         /// </summary>
         /// <param name="folder">一个正确的Minecraft文件夹。</param>
@@ -277,6 +231,36 @@ namespace Ntruk.API
                     break;
                 case "ff3a25bea2b0c235a91b7bfdec9900c7107dbd43":
                     title = "语言-bs_ba.json";
+                    break;
+                case "7779bdb781fb210176c653b1f8dc45c3f0850947":
+                    title = "语言-ca_es.json";
+                    break;
+                case "56d2e24c814facfa4b5eec059eba3c9620b66732":
+                    title = "语言-cs_cz.json";
+                    break;
+                case "7c50a40a1e4a2d147a78ef980fb647de2cabbbd8":
+                    title = "语言-cy_gb.json";
+                    break;
+                case "0531cd05d88f629218a8b18abc521dc580508dd9":
+                    title = "语言-da_dk.json";
+                    break;
+                case "40d67111dc6d737bd223c1e7782ac114cd21cf83":
+                    title = "语言-de_at.json";
+                    break;
+                case "80a753919b5f1d6838d02b482277f2ba6e94d7e6":
+                    title = "语言-de_ch.json";
+                    break;
+                case "4b4543bb7cd5c1c5e7de821070623eb4b7d17531":
+                    title = "语言-de_de.json";
+                    break;
+                case "872b3e7829aee47bea16c5032f82a74dc34b6385":
+                    title = "语言-el_gr.json";
+                    break;
+                case "9654e8295217f8b2313d5c9520a5ed8f2ce122b7":
+                    title = "语言-en_au.json";
+                    break;
+                case "7c056bd9eac2d0a34254f634ac48855ad9446f0a":
+                    title = "语言-en_ca.json";
                     break;
                 // TODO
                 default:
