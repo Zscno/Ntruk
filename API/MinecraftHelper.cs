@@ -95,6 +95,9 @@ namespace Ntruk.API
             switch (extensionName)
             {
                 case ".png":
+                    icon = "\uEB9F";
+                    iconColor = new SolidColorBrush(Color.FromArgb(255, 169, 106, 242));
+                    break;
                 case ".icns":
                     icon = "\uEB9F";
                     iconColor = new SolidColorBrush(Color.FromArgb(255, 21, 135, 208));
@@ -108,7 +111,13 @@ namespace Ntruk.API
                     iconColor = new SolidColorBrush(Color.FromArgb(255, 18, 170, 159));
                     break;
                 case ".mcmeta":
+                    icon = "\uE8A5";
+                    iconColor = new SolidColorBrush(Color.FromArgb(255, 99, 127, 150));
+                    break;
                 case ".json":
+                    icon = "\uE8A5";
+                    iconColor = new SolidColorBrush(Color.FromArgb(255, 183, 183, 59));
+                    break;
                 default:
                     icon = "\uE8A5";
                     iconColor = new SolidColorBrush(Color.FromArgb(255, 126, 155, 183));
@@ -119,19 +128,19 @@ namespace Ntruk.API
         }
 
         /// <summary>
-        /// 获取从<paramref name="icon"/>和<paramref name="name"/>解析出来的资源文件扩展名（最前面有“.”的）。
+        /// 获取从<paramref name="icon"/>和<paramref name="fullName"/>解析出来的资源文件扩展名（最前面有“.”的）。
         /// </summary>
         /// <param name="icon">一个正确的图标资源代码。</param>
-        /// <param name="name">一个正确的资源文件的相对路径。</param>
+        /// <param name="fullName">一个正确的资源文件的相对路径。</param>
         /// <returns>一个正确的资源文件扩展名（最前面有“.”的）。</returns>
         [Obsolete("此方法已被弃用。")]
-        public static string GetExtensionName(string icon, string name)
+        public static string GetExtensionName(string icon, string fullName)
         {
             string extensionName = string.Empty;
             switch (icon)
             {
                 case "\uEB9F":
-                    if (name == "icons/minecraft" || name == "icons/snapshot/minecraft")
+                    if (fullName == "icons/minecraft" || fullName == "icons/snapshot/minecraft")
                     {
                         extensionName = ".icns";
                     }
@@ -147,11 +156,11 @@ namespace Ntruk.API
                     extensionName = ".zip";
                     break;
                 case "\uE8A5":
-                    if (name == "pack")
+                    if (fullName == "pack")
                     {
                         extensionName = ".mcmeta";
                     }
-                    else if (name == "minecraft/font/include/unifont" || name.Split('/')[1] == "lang" || name == "minecraft/sounds")
+                    else if (fullName == "minecraft/font/include/unifont" || fullName.Split('/')[1] == "lang" || fullName == "minecraft/sounds")
                     {
                         extensionName = ".json";
                     }
