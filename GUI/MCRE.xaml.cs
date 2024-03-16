@@ -122,23 +122,15 @@ namespace Ntruk.GUI
 
         private async static Task CopyFile(List<MCREObj> targetObjs)
         {
-
             StorageFolder mcFolder = await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("MinecraftFolderToken");
             StorageFolder objsFolder = await StorageFolder.GetFolderFromPathAsync(Path.Combine(mcFolder.Path, "assets", "objects"));
             StorageFolder targetFolder = await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("TargetFolderToken");
             foreach (MCREObj objItem in targetObjs)
             {
-                StorageFolder subFolder = await StorageFolder.GetFolderFromPathAsync(Path.Combine(objsFolder.Path, objItem.Hash.Substring(0, 2)));
-                foreach (StorageFile objFile in await subFolder.GetFilesAsync())
-                {
-                    if (objFile.Name == objItem.Hash)
-                    {
-                        string[] temp = objItem.FullName.Split("/");
-                        string extension = Path.GetExtension(objItem.FullName);
-                        string fileName = string.Join('-', temp) + extension;
-                        await objFile.CopyAsync(targetFolder, fileName);
-                    }
-                }
+                StorageFile objFile = await StorageFile.GetFileFromPathAsync(Path.Combine(objsFolder.Path, objItem.Hash.Substring(0, 2), objItem.Hash));
+                string[] temp = objItem.Title.Split("/");
+                string fileName = string.Join('-', temp);
+                await objFile.CopyAsync(targetFolder, fileName);
             }
         }
     }
