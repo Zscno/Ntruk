@@ -195,46 +195,79 @@ namespace Ntruk.API
             switch (hash)
             {
                 case "b62ca8ec10d07e6bf5ac8dae0c8c1d2e6a1e3356":
-                    title = "正式版128x128.png";
+                    title = "图标-正式版128x128.png";
                     break;
                 case "5ff04807c356f1beed0b86ccf659b44b9983e3fa":
-                    title = "正式版16x16.png";
+                    title = "图标-正式版16x16.png";
                     break;
                 case "8030dd9dc315c0381d52c4782ea36c6baf6e8135":
-                    title = "正式版256x256.png";
+                    title = "图标-正式版256x256.png";
                     break;
                 case "af96f55a90eaf11b327f1b5f8834a051027dc506":
-                    title = "正式版32x32.png";
+                    title = "图标-正式版32x32.png";
                     break;
                 case "b80b6e9ff01c78c624df5429e1d3dcd3d5130834":
-                    title = "正式版48x48.png";
+                    title = "图标-正式版48x48.png";
                     break;
                 case "f00657542252858a721e715a2e888a9226404e35":
-                    title = "正式版.icns";
+                    title = "图标-正式版.icns";
                     break;
                 case "958d57021d8009de55d6e9e19957a72545e3c30c":
-                    title = "快照版128x128.png";
+                    title = "图标-快照版128x128.png";
                     break;
                 case "949afe72d4d3d785dab52d8baaefeb0e38b3c067":
-                    title = "快照版16x16.png";
+                    title = "图标-快照版16x16.png";
                     break;
                 case "9f84f917a09facacf1235eed3fa77789e4554afb":
-                    title = "快照版256x256.png";
+                    title = "图标-快照版256x256.png";
                     break;
                 case "26ad18d9f4ef0a71255459b5f01b738b81dbc7dc":
-                    title = "快照版32x32.png";
+                    title = "图标-快照版32x32.png";
                     break;
                 case "df274fe57c49ef1af6d218703d805db76a5c8af9":
-                    title = "快照版48x48.png";
+                    title = "图标-快照版48x48.png";
                     break;
                 case "65ebca3306ccd6d7f9d5de8f1cc7a1216d80246d":
-                    title = "快照版.icns";
+                    title = "图标-快照版.icns";
                     break;
                 case "f8d4768707b20359f2f7660346bd3a84b6ee27b1":
-                    title = "Minecraft字体-unifont.json";
+                    title = "字体-unifont.json";
                     break;
                 case "109663114d0099c48a703626c8462e07d802e08b":
-                    title = "Minecraft字体-unifont.zip";
+                    title = "字体-unifont.zip";
+                    break;
+                case "0c4a7ce69ee03d15b6ff2706eca246ab4234c9d1":
+                    title = "语言-af_za.json";
+                    break;
+                case "74c3cb140919b70e64484a9040d490a2b31977ba":
+                    title = "语言-ar_sa.json";
+                    break;
+                case "d8a6a2065e06049db7b9d82a6eab97276b953dca":
+                    title = "语言-ast_es.json";
+                    break;
+                case "78689dcb47f101e56db5386dded196927c8efa43":
+                    title = "语言-az_az.json";
+                    break;
+                case "ac692046a2c0e5414aaeafe76200a67b9f252aff":
+                    title = "语言-ba_ru.json";
+                    break;
+                case "e7672a4de5a730a1f92eb804df3d8e4146fdafce":
+                    title = "语言-bar.json";
+                    break;
+                case "2112ad08ccde94cdbc690a7f5c443df58d52d2e0":
+                    title = "语言-be_by.json";
+                    break;
+                case "fbdd0c830632939ea1cd20a331799086e0b5076a":
+                    title = "语言-bg_bg.json";
+                    break;
+                case "f6dd7169bb09dd53497cc9a561ad9ab87ce4c5af":
+                    title = "语言-br_fr.json";
+                    break;
+                case "ff77572950f2d837493d8e495191372646f1a3fc":
+                    title = "语言-brb.json";
+                    break;
+                case "ff3a25bea2b0c235a91b7bfdec9900c7107dbd43":
+                    title = "语言-bs_ba.json";
                     break;
                 // TODO
                 default:
