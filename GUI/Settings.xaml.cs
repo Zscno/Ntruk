@@ -33,32 +33,57 @@ namespace Ntruk.GUI
             }
             catch (Exception)
             {
-                PageHelper.NavigateOneselfTo(this, typeof(InitPage));
-                ContentDialogHelper.ShowTipDialog("请重新选择一个Minecraft文件夹。\n目前选择的文件夹不起作用。");
+                currentTarget.PlaceholderText = "请重新选择文件夹...";
+                ContentDialogHelper.ShowTipDialog("目前选择的Minecarft文件夹不起作用，请再次尝试。");
             }
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            currentFolder.IsReadOnly = true;
-            currentFolder.Text = (await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("MinecraftFolderToken")).Path;
-            currentVersion.PlaceholderText = IniHelper.ReadIni("Minecraft", "Version", MainPage.ConfigDataPath);
             try
             {
+                currentFolder.IsReadOnly = true;
+                currentTarget.IsReadOnly = true;
+                currentFolder.Text = (await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("MinecraftFolderToken")).Path;
+                currentTarget.Text = (await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("TargetFolderToken")).Path;
                 StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(Path.Combine((await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("MinecraftFolderToken")).Path, "assets", "indexes"));
                 string[] versions = await MinecraftHelper.GetAllVersions(folder);
+                string version = string.Empty;
+                foreach (var item in versions)
+                {
+                    if (item == IniHelper.ReadIni("Minecraft", "Version", MainPage.ConfigDataPath))
+                    {
+                        version = item;
+                        break;
+                    }
+                }
                 currentVersion.ItemsSource = versions;
+                currentVersion.SelectedItem = version;
             }
             catch (Exception)
             {
-                PageHelper.NavigateOneselfTo(this, typeof(InitPage));
-                ContentDialogHelper.ShowTipDialog("请重新选择一个Minecraft文件夹。\n目前选择的文件夹不起作用。");
+                currentFolder.PlaceholderText = "请重新选择文件夹...";
+                ContentDialogHelper.ShowTipDialog("目前选择的Minecarft文件夹不起作用，请再次尝试。");
             }
         }
 
         private void CurrentVersion_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             IniHelper.WriteIni("Minecraft", "Version", currentVersion.SelectionBoxItem.ToString(), MainPage.ConfigDataPath);
+        }
+
+        private async void ChangeTarget_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                await PickerHelper.UsePickerGetSingleFolder("TargetFolderToken");
+                currentTarget.Text = (await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("TargetFolderToken")).Path;
+            }
+            catch (Exception)
+            {
+                currentTarget.PlaceholderText = "请重新选择文件夹...";
+                ContentDialogHelper.ShowTipDialog("目前选择的目标文件夹可能无法使用，请再次尝试。");
+            }
         }
     }
 }
