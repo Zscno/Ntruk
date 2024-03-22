@@ -153,7 +153,7 @@ namespace Ntruk.API
         /// <para>*如果未解析成功将返回<paramref name="fullName"/> </para>
         /// </returns>
         public static string GetTitle(string hash, string fullName)
-        {//  为图标图片添加缩略图。。。
+        {
             string title;
             switch (hash)
             {
@@ -294,6 +294,36 @@ namespace Ntruk.API
                     break;
                 case "42288c6d2c3623124a8d07379e291dee30a04d1a":
                     title = "语言-es_es.json";
+                    break;
+                case "3449b4a5611d203d4edc7e1dc916e25ae0d66242":
+                    title = "语言-es_mx.json";
+                    break;
+                case "b1ba29cebad8161027a06836491ead66354b49e9":
+                    title = "语言-es_uy.json";
+                    break;
+                case "15eb232a624ff387868426148c380622a58db2b9":
+                    title = "语言-es_ve.json";
+                    break;
+                case "165568d8e18cf8cdfc3c6af5fc2c2217b6d3ef7b":
+                    title = "语言-esan.json";
+                    break;
+                case "982d6f89dd1e42f1ee82ee0efa1c431df035e903":
+                    title = "语言-et_ee.json";
+                    break;
+                case "5a674ccfa6f333fc5a84062acfc2cc141155da62":
+                    title = "语言-eu_es.json";
+                    break;
+                case "dcd738c37aedf7b465047e941191d4c582b062cf":
+                    title = "语言-fa_ir.json";
+                    break;
+                case "e3077d9f2d088304f57cebae6e808e802205ec63":
+                    title = "语言-fi_fi.json";
+                    break;
+                case "9350d63a942fc3f6abe83bb5b105b7047a39b7a8":
+                    title = "语言-fil_ph.json";
+                    break;
+                case "00007386081b4c8554508987d95c484c57569d2e":
+                    title = "语言-fo_fo.json";
                     break;
                 // TODO
                 default:
