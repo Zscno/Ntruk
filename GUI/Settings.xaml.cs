@@ -24,12 +24,14 @@ namespace Ntruk.GUI
         {
             try
             {
-                await PickerHelper.UsePickerGetSingleFolder("MinecraftFolderToken");
-                currentFolder.Text = (await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("MinecraftFolderToken")).Path;
-                StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(Path.Combine((await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("MinecraftFolderToken")).Path, "assets", "indexes"));
-                string[] versions = await MinecraftHelper.GetAllVersions(folder);
-                currentVersion.ItemsSource = versions;
-                currentVersion.PlaceholderText = "请重新选择版本...";
+                if (await PickerHelper.UsePickerGetSingleFolder("MinecraftFolderToken") != null)
+                {
+                    currentVersion.PlaceholderText = "请重新选择版本...";
+                    currentFolder.Text = (await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("MinecraftFolderToken")).Path;
+                    StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(Path.Combine((await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("MinecraftFolderToken")).Path, "assets", "indexes"));
+                    string[] versions = await MinecraftHelper.GetAllVersions(folder);
+                    currentVersion.ItemsSource = versions;
+                }
             }
             catch (Exception)
             {
@@ -76,8 +78,10 @@ namespace Ntruk.GUI
         {
             try
             {
-                await PickerHelper.UsePickerGetSingleFolder("TargetFolderToken");
-                currentTarget.Text = (await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("TargetFolderToken")).Path;
+                if (await PickerHelper.UsePickerGetSingleFolder("TargetFolderToken") != null)
+                {
+                    currentTarget.Text = (await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("TargetFolderToken")).Path;
+                }
             }
             catch (Exception)
             {
