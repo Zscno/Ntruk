@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ntruk.GUI;
+using System;
 using Windows.UI.Xaml.Controls;
 
 namespace Ntruk.API
@@ -11,34 +12,31 @@ namespace Ntruk.API
         /// <summary>
         /// 显示一个提示对话框。
         /// </summary>
-        /// <param name="content">对话框的内容。<para>可传入字符串对象或一个容器。</para></param>
-        public static void ShowTipDialog(object content)
+        /// <param name="text">对话框中的文字。</param>
+        public static async void ShowTipDialog(string text)
         {
-            ShowDialog("提示", content);
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = "提示",
+                PrimaryButtonText = "确定",
+                DefaultButton = ContentDialogButton.Primary,
+                Content = new InfoDialog(text),
+            };
+            await dialog.ShowAsync();
         }
 
         /// <summary>
         /// 显示一个错误对话框。
         /// </summary>
-        /// <param name="content">对话框的内容。<para>可传入字符串对象或一个容器。</para></param>
-        public static void ShowErrorDialog(object content)
-        {
-            ShowDialog("错误", content);
-        }
-
-        /// <summary>
-        /// 显示一个对话框。
-        /// </summary>
-        /// <param name="title">对话框的标题。</param>
-        /// <param name="content">对话框的内容。<para>可传入字符串对象或一个容器。</para></param>
-        public static async void ShowDialog(string title, object content)
+        /// <param name="text">对话框中的文字。</param>
+        public static async void ShowErrorDialog(string text)
         {
             ContentDialog dialog = new ContentDialog()
             {
-                Title = title,
-                Content = content,
+                Title = "错误",
                 PrimaryButtonText = "确定",
                 DefaultButton = ContentDialogButton.Primary,
+                Content = new ErrorDialog(text),
             };
             await dialog.ShowAsync();
         }
