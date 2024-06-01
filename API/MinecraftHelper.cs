@@ -1,16 +1,13 @@
-﻿using Windows.UI.Xaml.Media;
-using Windows.UI;
-using System.IO;
+﻿using System;
 using System.Collections.Generic;
-using System;
-using Windows.Storage;
+using System.IO;
 using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.UI;
+using Windows.UI.Xaml.Media;
 
 namespace Ntruk.API
 {
-    /// <summary>
-    /// 关于Minecraft与程序的转换操作。
-    /// </summary>
     internal static class MinecraftHelper
     {
         /// <summary>

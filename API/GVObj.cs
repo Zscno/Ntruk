@@ -25,7 +25,7 @@ namespace Ntruk.API
         /// <summary>
         /// 显示在界面上的标题。
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; set; }// 待修改
 
         /// <summary>
         /// 显示在界面上的图标。
@@ -45,6 +45,6 @@ namespace Ntruk.API
         /// <summary>
         /// 完整名称。
         /// </summary>
-        public string FullName { get; set; }
+        public string FullName { get; set; }// 待修改
     }
 }

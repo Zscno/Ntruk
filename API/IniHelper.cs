@@ -2,9 +2,6 @@
 
 namespace Ntruk.API
 {
-    /// <summary>
-    /// 为 <c>Ini File</c> 创造更简单的I/O操作方法。
-    /// </summary>
     internal static class IniHelper
     {
         // 声明INI文件的写操作函数
@@ -34,7 +31,7 @@ namespace Ntruk.API
         /// <param name="section">节点名称。</param>
         /// <param name="key">键名。</param>
         /// <param name="path">Ini文件路径。</param>
-        /// <returns>对应的键值。</returns>
+        /// <returns><paramref name="section"/>、<paramref name="key"/>对应的键值。</returns>
         public static string ReadIni(string section, string key, string path)
         {
             // 每次从ini中读取多少字节

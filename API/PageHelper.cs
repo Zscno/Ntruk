@@ -5,15 +5,12 @@ using Windows.UI.Xaml.Media;
 
 namespace Ntruk.API
 {
-    /// <summary>
-    /// 为<typeparamref name="Page"/>创造更简单的操作方法。
-    /// </summary>
     internal class PageHelper
     {
         /// <summary>
-        /// 让<paramref name="currentObj"/>的父控件（<typeparamref name="Frame"/>类型）导航到<paramref name="page"/>。
+        /// 让<paramref name="currentObj"/>的父控件（<see cref="Frame"/>类型）导航到<see cref="Page"/>。
         /// </summary>
-        /// <param name="currentObj">当前的控件。</param>
+        /// <param name="currentObj">当前控件。</param>
         /// <param name="page">将要导航的控件。</param>
         /// <returns>指示操作是否成功。返回空字符串就是操作成功；返回错误信息就是操作失败。</returns>
         public static string NavigateOneselfTo(DependencyObject currentObj, Type page)
@@ -35,7 +32,7 @@ namespace Ntruk.API
         /// 获取<paramref name="element"/>的父元素。
         /// </summary>
         /// <param name="element">要操作的元素。</param>
-        /// <returns>一个<typeparamref name="Frame"/>实例。<para>当返回<c>null</c>时，操作不成功。</para></returns>
+        /// <returns>一个<see cref="Frame"/>类型的对象。<para>返回<see cref="null"/>则操作失败。</para></returns>
         public static Frame GetParentElement(DependencyObject element)
         {
             try
@@ -54,10 +51,10 @@ namespace Ntruk.API
         }
 
         /// <summary>
-        /// 获取<paramref name="depObj"/>中RelativePanel类型的子元素（采用递归，直到找到RelativePanel类型的子元素）。
+        /// 获取<paramref name="depObj"/>中的<see cref="RelativePanel"/>类型（采用递归，直到找到<see cref="RelativePanel"/>类型）。
         /// </summary>
         /// <param name="depObj">要操作的元素。</param>
-        /// <returns>RelativePanel类型的子元素</returns>
+        /// <returns>一个<see cref="RelativePanel"/>类型的对象。</returns>
         private static RelativePanel FindChild<RelativePanel>(DependencyObject depObj) where RelativePanel : DependencyObject
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
