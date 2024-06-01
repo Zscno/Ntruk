@@ -98,28 +98,6 @@ namespace Ntruk.GUI
             ContentDialogHelper.ShowTipDialog("提取完毕。");
         }
 
-        // 在下一次更新中将此方法移动至PageHelper类型中。
-        private static RelativePanel FindChild<RelativePanel>(DependencyObject depObj) where RelativePanel : DependencyObject
-        {
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
-            {
-                DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-                if (child != null && child is RelativePanel panel)
-                {
-                    return panel;
-                }
-                else
-                {
-                    RelativePanel childItem = FindChild<RelativePanel>(child);
-                    if (childItem != null)
-                    {
-                        return childItem;
-                    }
-                }
-            }
-            return null;
-        }
-
         private async static Task CopyFile(List<MCREObj> targetObjs)
         {
             StorageFolder mcFolder = await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("MinecraftFolderToken");

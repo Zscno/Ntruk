@@ -52,5 +52,31 @@ namespace Ntruk.API
                 return null;
             }
         }
+
+        /// <summary>
+        /// 获取<paramref name="depObj"/>中RelativePanel类型的子元素（采用递归，直到找到RelativePanel类型的子元素）。
+        /// </summary>
+        /// <param name="depObj">要操作的元素。</param>
+        /// <returns>RelativePanel类型的子元素</returns>
+        private static RelativePanel FindChild<RelativePanel>(DependencyObject depObj) where RelativePanel : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                if (child != null && child is RelativePanel panel)
+                {
+                    return panel;
+                }
+                else
+                {
+                    RelativePanel childItem = FindChild<RelativePanel>(child);
+                    if (childItem != null)
+                    {
+                        return childItem;
+                    }
+                }
+            }
+            return null;
+        }
     }
 }

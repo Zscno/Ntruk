@@ -5,6 +5,7 @@ using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using System.Collections.Generic;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -24,13 +25,34 @@ namespace Ntruk.GUI
         {
             try
             {
+                StorageFolder formerFolder = await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("MinecraftFolderToken");
                 if (await PickerHelper.UsePickerGetSingleFolder("MinecraftFolderToken") != null)
                 {
+                    StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(Path.Combine((await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("MinecraftFolderToken")).Path, "assets", "indexes"));
+                    string[] versionsFile = await MinecraftHelper.GetAllVersions(folder);
+                    StorageFolder versionsFolder = await StorageFolder.GetFolderFromPathAsync(Path.Combine((await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("MinecraftFolderToken")).Path, "versions"));
+                    IReadOnlyList<StorageFolder> folders = await versionsFolder.GetFoldersAsync();
+                    string[] versions = new string[folders.Count];
+                    int count = 0;
+                    foreach (var item in folders)
+                    {
+                        foreach (var item1 in versionsFile)
+                        {
+                            if (item.Name.Split('-')[0] == item1)
+                            {
+                                versions[count] = item1;
+                                count++;//没用
+                            }
+                        }
+                    }
                     currentVersion.PlaceholderText = "请重新选择版本...";
                     currentFolder.Text = (await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("MinecraftFolderToken")).Path;
-                    StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(Path.Combine((await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("MinecraftFolderToken")).Path, "assets", "indexes"));
-                    string[] versions = await MinecraftHelper.GetAllVersions(folder);
                     currentVersion.ItemsSource = versions;
+                }
+                else
+                {
+                    StorageApplicationPermissions.FutureAccessList.AddOrReplace("MinecraftFolderToken", formerFolder);
+                    currentVersion.PlaceholderText = "请重新选择Minecraft文件夹...";
                 }
             }
             catch (Exception)
