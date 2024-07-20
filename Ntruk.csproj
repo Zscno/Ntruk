@@ -118,6 +118,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="API\StringTreeNode.cs" />
     <Compile Include="GUI\ErrorDialog.xaml.cs">
       <DependentUpon>ErrorDialog.xaml</DependentUpon>
     </Compile>
@@ -148,6 +149,9 @@
     </Compile>
     <Compile Include="API\PageHelper.cs" />
     <Compile Include="API\PickerHelper.cs" />
+    <Compile Include="GUI\MCREFilePage.xaml.cs">
+      <DependentUpon>MCREFilePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\PickFolder.xaml.cs">
       <DependentUpon>PickFolder.xaml</DependentUpon>
     </Compile>
@@ -273,6 +277,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\MCRE.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\MCREFilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -10,7 +10,7 @@
     xmlns:na="using:Ntruk.API"
     Loaded="Page_Loaded">
 
-    <Page.Resources>
+    <!--<Page.Resources>
         <DataTemplate x:Key="MCREObj" x:DataType="na:MCREObj">
             <RelativePanel x:Name="itemPanel" Width="175" Height="125">
                 <FontIcon FontFamily="Segoe Fluent Icons"  FontSize="64"
@@ -30,12 +30,11 @@
                            RelativePanel.AlignHorizontalCenterWithPanel="True"/>
             </RelativePanel>
         </DataTemplate>
-    </Page.Resources>
+    </Page.Resources>-->
     <Grid x:Name="mainPanel">
         <Grid.RowDefinitions>
             <RowDefinition Height="200"/>
             <RowDefinition/>
-            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
         <Image Grid.Row="0"
                Source="/Images/MCREBackground.jpg"
@@ -47,7 +46,10 @@
                    FontSize="40"
                    VerticalAlignment="Center"
                    x:Name="titleText"/>
-        <GridView Grid.Row="1"
+        <Frame
+            x:Name="mainFrame"
+            Grid.Row="1"/>
+        <!--<GridView Grid.Row="1"
                   x:Name="contentView"
                   SelectionMode="Multiple"
                   ItemTemplate="{StaticResource MCREObj}"
@@ -76,6 +78,6 @@
         <muxc:ProgressRing x:Name="loadingAnimation"
                            Grid.Row="1"
                            VerticalAlignment="Center"
-                           HorizontalAlignment="Center"/>
+                           HorizontalAlignment="Center"/>-->
     </Grid>
 </Page>

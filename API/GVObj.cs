@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml.Media;
+﻿using System.Collections.Generic;
+using Windows.UI.Xaml.Media;
 
 namespace Ntruk.API
 {
@@ -25,7 +26,12 @@ namespace Ntruk.API
         /// <summary>
         /// 显示在界面上的标题。
         /// </summary>
-        public string Title { get; set; }// 待修改
+        public string Title { get; set; }
+
+        /// <summary>
+        /// 路径。
+        /// </summary>
+        public string Path { get; set; }
 
         /// <summary>
         /// 显示在界面上的图标。
@@ -40,11 +46,6 @@ namespace Ntruk.API
         /// <summary>
         /// 哈希值。
         /// </summary>
-        public string Hash {  get; set; }
-        
-        /// <summary>
-        /// 完整名称。
-        /// </summary>
-        public string FullName { get; set; }// 待修改
+        public string Hash { get; set; }
     }
 }

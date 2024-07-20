@@ -115,6 +115,10 @@ namespace Ntruk.API
                     icon = "\uE8A5";
                     iconColor = new SolidColorBrush(Color.FromArgb(255, 183, 183, 59));
                     break;
+                case "Folder":
+                    icon = "\uF12B";
+                    iconColor = new SolidColorBrush(Color.FromArgb(255, 255, 208, 76));
+                    break;
                 default:
                     icon = "\uE8A5";
                     iconColor = new SolidColorBrush(Color.FromArgb(255, 126, 155, 183));

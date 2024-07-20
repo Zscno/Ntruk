@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -20,27 +19,41 @@ namespace Ntruk.GUI
     /// </summary>
     public sealed partial class MCRE : Page
     {
+        /// <summary>
+        /// MCRE界面中的文件对象数组。
+        /// </summary>
+        internal static List<MCREObj> MCFileObjs;
+
+        /// <summary>
+        /// MCRE界面中的文件对象数组树形逻辑结构根节点。
+        /// </summary>
+        internal static StringTreeNode Root;
+
+        /// <summary>
+        /// MCRE界面中将要导出的文件集合。
+        /// </summary>
+        internal static List<MCREObj> ReadyData;
+
         public MCRE()
         {
             this.InitializeComponent();
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            loadingAnimation.IsActive = true;
-            await GetMCREData();
-            if (Objs == null)
-            {
-                ContentDialogHelper.ShowErrorDialog("我们这里出了些问题：" + ExMessage + "\n请根据以上信息尝试解决问题。\n如还是有问题可以反馈到Github（在关于界面中）。");
-            }
-            contentView.ItemsSource = Objs;
-            loadingAnimation.IsActive = false;
+            //loadingAnimation.IsActive = true;
+            //MainPage.MCFileObjs = await GetMCREData();
+            mainFrame.Navigate(typeof(MCREFilePage));
+            ReadyData = new List<MCREObj>();
+            //if (Objs == null)
+            //{
+            //    ContentDialogHelper.ShowErrorDialog("我们这里出了些问题：" + ExMessage + "\n请根据以上信息尝试解决问题。\n如还是有问题可以反馈到Github（在关于界面中）。");
+            //}
+            //contentView.ItemsSource = Objs;
+            //loadingAnimation.IsActive = false;
         }
 
-        List<MCREObj> Objs;
-        string ExMessage = string.Empty;
-
-        private async Task GetMCREData()
+        private async Task<List<MCREObj>> GetMCREData()
         {
             try
             {
@@ -53,7 +66,7 @@ namespace Ntruk.GUI
                 string fileText = await FileIO.ReadTextAsync(indexeFile);
                 #endregion
 
-                Objs = new List<MCREObj>();
+                List<MCREObj> objs = new List<MCREObj>();
 
                 #region 反序列化Minecraft资源索引文件内容，并将提取内容到列表。
                 // 将文本转换为Json文档。
@@ -63,39 +76,43 @@ namespace Ntruk.GUI
                 //遍历解析的所有名称。
                 foreach (JsonProperty objProperty in objElement.EnumerateObject())
                 {
+                    string[] pathParts = objProperty.Name.Split('/');
                     (string, SolidColorBrush) tuple = MinecraftHelper.GetIcon(Path.GetExtension(objProperty.Name));
                     MCREObj obj = new MCREObj()
                     {
                         Hash = objProperty.Value.GetProperty("hash").ToString(),
-                        Title = MinecraftHelper.GetTitle(objProperty.Value.GetProperty("hash").ToString(), objProperty.Name),
+                        Title = pathParts[pathParts.Length - 1],//MinecraftHelper.GetTitle(objProperty.Value.GetProperty("hash").ToString(), objProperty.Name),
+                        Path = objProperty.Name,
                         Icon = tuple.Item1,
                         IconColor = tuple.Item2,
-                        FullName = objProperty.Name,
                     };
-                    Objs.Add(obj);
+                    objs.Add(obj);
+                    Root = new StringTreeNode("root");
+                    Root.Add(pathParts, 0);
                 }
                 #endregion
+
+                return objs;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ExMessage = ex.Message;
-                Objs = null;
+                throw;
             }
         }
 
-        private async void DetermineButton_Click(object sender, RoutedEventArgs e)
+        private void DetermineButton_Click(object sender, RoutedEventArgs e)
         {
-            loadingAnimation.IsActive = true;
-            determineButton.IsEnabled = false;
-            List<MCREObj> targetObjs = contentView.SelectedItems.Cast<MCREObj>().ToList();
-            if (targetObjs.Count == 0)
-            {
-                ContentDialogHelper.ShowTipDialog("请选择要提取的资源。");
-            }
-            await CopyFile(targetObjs);
-            loadingAnimation.IsActive = false;
-            determineButton.IsEnabled = true;
-            ContentDialogHelper.ShowTipDialog("提取完毕。");
+            //loadingAnimation.IsActive = true;
+            //determineButton.IsEnabled = false;
+            //List<MCREObj> targetObjs = contentView.SelectedItems.Cast<MCREObj>().ToList();
+            //if (targetObjs.Count == 0)
+            //{
+            //    ContentDialogHelper.ShowTipDialog("请选择要提取的资源。");
+            //}
+            //await CopyFile(targetObjs);
+            //loadingAnimation.IsActive = false;
+            //determineButton.IsEnabled = true;
+            //ContentDialogHelper.ShowTipDialog("提取完毕。");
         }
 
         private async static Task CopyFile(List<MCREObj> targetObjs)
@@ -106,9 +123,7 @@ namespace Ntruk.GUI
             foreach (MCREObj objItem in targetObjs)
             {
                 StorageFile objFile = await StorageFile.GetFileFromPathAsync(Path.Combine(objsFolder.Path, objItem.Hash.Substring(0, 2), objItem.Hash));
-                string[] temp = objItem.Title.Split("/");
-                string fileName = string.Join('-', temp);
-                await objFile.CopyAsync(targetFolder, fileName);
+                await objFile.CopyAsync(targetFolder, objItem.Title);
             }
         }
     }

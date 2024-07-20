@@ -1,0 +1,79 @@
+﻿<Page
+    x:Class="Ntruk.GUI.MCREFilePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Ntruk.GUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:na="using:Ntruk.API"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    Loaded="MCREFilePage_Loaded">
+    
+    <Page.Resources>
+        <DataTemplate x:Key="MCREObj" x:DataType="na:MCREObj">
+            <RelativePanel x:Name="itemPanel" Width="175" Height="125">
+                <FontIcon FontFamily="Segoe Fluent Icons"  FontSize="64"
+                      x:Name="icon"
+                      RelativePanel.AlignHorizontalCenterWithPanel="True"
+                      Margin="4, 4, 4, 2"
+                      Glyph="{x:Bind Icon}"
+                      Foreground="{x:Bind IconColor}"/>
+                <TextBlock x:Name="titleText"
+                       Text="{x:Bind Title}"
+                       Margin="4, 2, 4, 4"
+                       FontWeight="Bold"
+                       FontSize="16"
+                       RelativePanel.Below="icon"
+                       TextWrapping="WrapWholeWords"
+                       TextAlignment="Center"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+            </RelativePanel>
+        </DataTemplate>
+    </Page.Resources>
+    <Grid x:Name="mainPanel">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <GridView
+            Grid.Row="0"
+            x:Name="contentView"
+            SelectionMode="None"
+            ItemTemplate="{StaticResource MCREObj}"
+            IsItemClickEnabled="True"
+            ItemClick="ContentView_ItemClick"
+            CornerRadius="4">
+            <GridView.ItemContainerStyle>
+                <Style TargetType="GridViewItem">
+                    <Setter Property="Margin" Value="4"/>
+                </Style>
+            </GridView.ItemContainerStyle>
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+        </GridView>
+
+
+        <Grid Grid.Row="1"
+              Background="#1f7f7f7f"
+              x:Name="BottomPanel">
+            <Button x:Name="determineButton"
+                    HorizontalAlignment="Right"
+                    Content="提取选中的资源"
+                    Margin="64, 0, 64, 0"
+                    Click="DetermineButton_Click"/>
+            <TextBlock
+                x:Name="numberText"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Margin="64, 0, 64, 0"/>
+        </Grid>
+        <muxc:ProgressRing x:Name="loadingAnimation"
+                           Grid.Row="0"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"/>
+    </Grid>
+</Page>
