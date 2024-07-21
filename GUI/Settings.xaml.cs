@@ -14,7 +14,7 @@ namespace Ntruk.GUI
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class Settings : Page
+    public sealed partial class Settings : Page//在之后重构“设置”页面时加入日志系统。
     {
         public Settings()
         {

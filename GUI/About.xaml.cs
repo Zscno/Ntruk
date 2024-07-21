@@ -17,6 +17,11 @@ namespace Ntruk.GUI
         public About()
         {
             this.InitializeComponent();
+        }
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            await LogSystem.WriteLog(LogLevel.Info, this, "初始化“关于”界面...");
             ApplicationTheme theme = Application.Current.RequestedTheme;
             if (theme == ApplicationTheme.Light)
             {
@@ -30,7 +35,9 @@ namespace Ntruk.GUI
             {
                 iconImage.Source = new BitmapImage(new Uri("ms-appx:///Images/Ntruk-Dark-400x400.png"));
             }
+            await LogSystem.WriteLog(LogLevel.Info, this, "应用图标已加载。");
             verisonText.Text = $"v.{Package.Current.Id.Version.Major}.{Package.Current.Id.Version.Minor}.{Package.Current.Id.Version.Build}";
+            await LogSystem.WriteLog(LogLevel.Info, this, "应用版本已加载。");
         }
     }
 }

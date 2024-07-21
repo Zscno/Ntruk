@@ -141,6 +141,7 @@
     <Compile Include="GUI\InitPage.xaml.cs">
       <DependentUpon>InitPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="API\LogSystem.cs" />
     <Compile Include="GUI\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

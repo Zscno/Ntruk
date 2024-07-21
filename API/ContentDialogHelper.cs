@@ -1,5 +1,6 @@
 ﻿using Ntruk.GUI;
 using System;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 
 namespace Ntruk.API
@@ -26,16 +27,17 @@ namespace Ntruk.API
         /// 显示一个错误对话框。
         /// </summary>
         /// <param name="text">对话框中的文字。</param>
-        public static async void ShowErrorDialog(string text)
+        public static async Task<ContentDialogResult> ShowErrorDialog(string text)
         {
             ContentDialog dialog = new ContentDialog()
             {
                 Title = "错误",
-                PrimaryButtonText = "确定",
+                PrimaryButtonText = "打开日志所在位置",
+                SecondaryButtonText = "退出",
                 DefaultButton = ContentDialogButton.Primary,
                 Content = new ErrorDialog(text),
             };
-            await dialog.ShowAsync();
+            return await dialog.ShowAsync();
         }
     }
 }

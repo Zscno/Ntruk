@@ -14,7 +14,6 @@ namespace Ntruk.GUI
         public UserMainPage()
         {
             this.InitializeComponent();
-            mainPanel.SelectedItem = home;
         }
 
         private void MainPanel_SelectionChanged(muxc.NavigationView sender, muxc.NavigationViewSelectionChangedEventArgs args)
@@ -56,6 +55,12 @@ namespace Ntruk.GUI
                 default:
                     break;
             }
+        }
+
+        private async void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            mainPanel.SelectedItem = home;
+            await LogSystem.WriteLog(LogLevel.Info, this, "“用户主界面”加载完成。");
         }
     }
 }
