@@ -61,12 +61,11 @@ namespace Ntruk.GUI
                     }
                 }
                 contentView.ItemsSource = CurrentData;
-                throw new Exception();
             }
             catch (Exception ex)
             {
                 await LogSystem.WriteLog(LogLevel.Error, this, $"加载MCREFilePage时{ex.Message} And it is {ex.StackTrace}");
-                ContentDialogResult result = await ContentDialogHelper.ShowErrorDialog("加载页面时遇到错误。请将日志反馈到Github上以解决问题。");
+                ContentDialogResult result = await ContentDialogHelper.ShowErrorDialog("加载页面时遇到错误。请将日志反馈到Github上以解决问题。\n（通过“关于”界面上的“Github”超链接）");
                 switch (result)
                 {
                     case ContentDialogResult.None:
@@ -173,6 +172,22 @@ namespace Ntruk.GUI
             catch (Exception ex)
             {
                 await LogSystem.WriteLog(LogLevel.Error, this, $"提取MCRE资源时{ex.Message} And it is {ex.StackTrace}");
+                ContentDialogResult result = await ContentDialogHelper.ShowErrorDialog("提取资源时遇到错误。请将日志反馈到Github上以解决问题。\n（通过“关于”界面上的“Github”超链接）");
+                switch (result)
+                {
+                    case ContentDialogResult.None:
+                    case ContentDialogResult.Primary:
+                        FolderLauncherOptions folderLauncherOptions = new FolderLauncherOptions();
+                        folderLauncherOptions.ItemsToSelect.Add(LogSystem.LogFile);
+                        await Launcher.LaunchFolderAsync(ApplicationData.Current.LocalFolder, folderLauncherOptions);
+                        CoreApplication.Exit();
+                        break;
+                    case ContentDialogResult.Secondary:
+                        CoreApplication.Exit();
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
