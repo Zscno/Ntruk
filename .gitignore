@@ -31,5 +31,11 @@ Properties/
 #证书文件。
 *.pfx
 
-#项目文件
+#项目文件。
 *.csproj
+
+#更新内容。
+UpdatedContent.md
+
+#代码标准
+Standard.md

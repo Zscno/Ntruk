@@ -31,7 +31,8 @@
 				x:Name="currentFolder"
 				Header="目前使用的游戏文件夹："
 				Margin="8, 16, 8, 8"
-				Width="300"/>
+				Width="300"
+                IsReadOnly="True"/>
 			<Button
 				x:Name="changeFolder"
 				Content="修改"
@@ -51,7 +52,8 @@
 				Header="目前使用的目标文件夹："
 				Margin="8, 8, 8, 8"
 				Width="300"
-                RelativePanel.Below="currentVersion"/>
+                RelativePanel.Below="currentVersion"
+                IsReadOnly="True"/>
 			<Button
 				x:Name="changeTarget"
 				Content="修改"
