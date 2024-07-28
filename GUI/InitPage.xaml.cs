@@ -23,44 +23,46 @@ namespace Ntruk.GUI
             switch (Count)
             {
                 case 0:
-                    if (PickFolder.Folder == null || PickFolder.Folder == string.Empty)
+                    if (!PickFolder.IsFolderOperable)
                     {
-                        await LogSystem.WriteLog(LogLevel.Warning, new PickFolder(), "用户没有选择Minecraft文件夹。");
-                        ContentDialogHelper.ShowTipDialog("请选择一个Minecraft文件夹。");
-                        break;
+                        ContentDialogHelper.ShowTipDialog("请点击“打开...”按钮并选择一个Minecraft文件夹。");
                     }
-                    await LogSystem.WriteLog(LogLevel.Info, new PickFolder(), "应用初始化第一步完成。");
-                    contentFrame.Navigate(typeof(PickVersion));
-                    backButton.IsEnabled = true;
-                    titleText.Text = "初始化（2/3）";
-                    Count = 1;
+                    else
+                    {
+                        await LogSystem.WriteLog(LogLevel.Info, new PickFolder(), "应用初始化第一步完成。");
+                        contentFrame.Navigate(typeof(PickVersion));
+                        backButton.IsEnabled = true;
+                        titleText.Text = "初始化（2/3）";
+                        Count = 1;
+                    }
                     break;
                 case 1:
-                    if (PickVersion.Version == null || PickVersion.Version == string.Empty)
+                    if (!PickVersion.DoesTheUserChoose)
                     {
                         await LogSystem.WriteLog(LogLevel.Warning, new PickVersion(), "用户没有选择Minecraft版本。");
                         ContentDialogHelper.ShowTipDialog("请选择一个Minecraft版本。");
-                        break;
                     }
-                    await LogSystem.WriteLog(LogLevel.Info, new PickVersion(), "应用初始化第二步完成。");
-                    contentFrame.Navigate(typeof(PickTarget));
-                    titleText.Text = "初始化（3/3）";
-                    nextButton.Content = "完成";
-                    Count = 2;
+                    else
+                    {
+                        await LogSystem.WriteLog(LogLevel.Info, new PickVersion(), "应用初始化第二步完成。");
+                        contentFrame.Navigate(typeof(PickTarget));
+                        titleText.Text = "初始化（3/3）";
+                        nextButton.Content = "完成";
+                        Count = 2;
+                    }
                     break;
                 case 2:
-                    if (PickTarget.Folder == null || PickTarget.Folder == string.Empty)
+                    if (!PickTarget.IsFolderOperable)
                     {
-                        await LogSystem.WriteLog(LogLevel.Warning, new PickTarget(), "用户没有选择目标文件夹。");
-                        ContentDialogHelper.ShowTipDialog("请选择一个目标文件夹。");
-                        break;
+                        ContentDialogHelper.ShowTipDialog("请点击“打开...”按钮并选择一个文件夹。");
                     }
-                    IniHelper.WriteIni("Minecraft", "Folder", PickFolder.Folder, MainPage.ConfigDataPath);
-                    IniHelper.WriteIni("Minecraft", "Version", PickVersion.Version, MainPage.ConfigDataPath);
-                    await LogSystem.WriteLog(LogLevel.Info, new PickTarget(), "应用初始化第三步完成。");
-                    await LogSystem.WriteLog(LogLevel.Info, this, "应用初始化已全部完成。");
-                    PageHelper.NavigateOneselfTo(this, typeof(UserMainPage));
-                    Count = 3;
+                    else
+                    {
+                        await LogSystem.WriteLog(LogLevel.Info, new PickTarget(), "应用初始化第三步完成。");
+                        await LogSystem.WriteLog(LogLevel.Info, this, "应用初始化已全部完成。");
+                        PageHelper.NavigateOneselfTo(this, typeof(UserMainPage));
+                        Count = 3;
+                    }
                     break;
                 default:
                     break;
@@ -76,14 +78,12 @@ namespace Ntruk.GUI
                     backButton.IsEnabled = false;
                     titleText.Text = "初始化（1/3）";
                     Count = 0;
-                    PickFolder.Folder = string.Empty;
                     await LogSystem.WriteLog(LogLevel.Info, new PickFolder(), "用户已回退并重置至应用初始化第一步。");
                     break;
                 case 2:
                     contentFrame.Navigate(typeof(PickVersion));
                     titleText.Text = "初始化（2/3）";
                     Count = 1;
-                    PickVersion.Version = string.Empty;
                     await LogSystem.WriteLog(LogLevel.Info, new PickVersion(), "用户已回退并重置至应用初始化第二步。");
                     break;
                 default:
@@ -94,7 +94,6 @@ namespace Ntruk.GUI
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             contentFrame.Navigate(typeof(PickFolder));
-            backButton.IsEnabled = false;
             Count = 0;
             await LogSystem.WriteLog(LogLevel.Info, this, "“初始化应用界面”加载完成。");
         }

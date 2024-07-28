@@ -34,7 +34,8 @@
                     Content="上一步"
                     RelativePanel.LeftOf="nextButton"
                     Margin="60, 60, 30, 60"
-                    Click="BackButton_Click"/>
+                    Click="BackButton_Click"
+                    IsEnabled="False"/>
         </RelativePanel>
     </Grid>
 </Page>

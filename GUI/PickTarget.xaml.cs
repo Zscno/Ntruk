@@ -1,8 +1,6 @@
 ﻿using Ntruk.API;
-using System;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
-using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -18,18 +16,31 @@ namespace Ntruk.GUI
         public PickTarget()
         {
             this.InitializeComponent();
+            IsFolderOperable = false;
         }
 
-        public static string Folder;
+        /// <summary>
+        /// 指示该界面获取的Folder是否存在并可访问。
+        /// </summary>
+        public static bool IsFolderOperable { get; private set; } = false;
 
         private async void OpenButton_Click(object sender, RoutedEventArgs e)
         {
-            inputBox.Text = (await PickerHelper.UsePickerGetSingleFolder("TargetFolderToken")).Path;
-        }
-
-        private void InputBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Folder = inputBox.Text;
+            openButton.IsEnabled = false;
+            StorageFolder targetFolder = await PickerHelper.GetSingleFolderByPicker();
+            if (targetFolder != null)
+            {
+                StorageApplicationPermissions.FutureAccessList.AddOrReplace("TargetFolderToken", targetFolder);
+                IniHelper.WriteIni("Minecraft", "Target", targetFolder.Path, MainPage.ConfigDataPath);
+                inputBox.Text = targetFolder.Path;
+                IsFolderOperable = true;
+            }
+            else
+            {
+                await LogSystem.WriteLog(LogLevel.Warning, new PickTarget(), "用户没有选择文件夹。");
+                IsFolderOperable = false;
+            }
+            openButton.IsEnabled = true;
         }
     }
 }

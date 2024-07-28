@@ -1,8 +1,8 @@
 ﻿using Ntruk.API;
 using System;
+using System.IO;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
-using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -18,18 +18,60 @@ namespace Ntruk.GUI
         public PickFolder()
         {
             this.InitializeComponent();
+            IsFolderOperable = false;
         }
 
-        public static string Folder;
+        /// <summary>
+        /// 指示该界面获取的Folder是否存在并可访问。
+        /// </summary>
+        public static bool IsFolderOperable { get; private set; } = false;
+
+        /// <summary>
+        /// 该界面获取的文件夹中的所有Minecraft版本。
+        /// </summary>
+        public static string[] Versions { get; private set; }
 
         private async void OpenButton_Click(object sender, RoutedEventArgs e)
         {
-            inputBox.Text = (await PickerHelper.UsePickerGetSingleFolder("MinecraftFolderToken")).Path;
-        }
+            openButton.IsEnabled = false;
+            await LogSystem.WriteLog(LogLevel.Info, this, "用户尝试选择一个Minecraft文件夹...");
+            StorageFolder minecraftFolder = await PickerHelper.GetSingleFolderByPicker();
+            if (minecraftFolder != null)
+            {
+                StorageFolder indexesFolder;
+                try
+                {
+                    indexesFolder = await StorageFolder.GetFolderFromPathAsync(Path.Combine(minecraftFolder.Path, "assets", "indexes"));
+                }
+                catch (Exception ex)
+                {
+                    await LogSystem.WriteLog(LogLevel.Warning, this, $"获取文件夹{Path.Combine(minecraftFolder.Path, "assets", "indexes")}时触发异常：{ex.Message}。");
+                    ContentDialogHelper.ShowTipDialog("我们无法访问所选Minecraft文件夹。\n请您更换文件夹再次尝试。");
+                    openButton.IsEnabled = true;
+                    IsFolderOperable = false;
+                    return;
+                }
+                Versions = await MinecraftHelper.GetAllVersions(indexesFolder);
+                if (Versions.Length == 0)
+                {
+                    await LogSystem.WriteLog(LogLevel.Warning, this, $"{indexesFolder.Path}中没有资源索引文件（.json）。");
+                    ContentDialogHelper.ShowTipDialog("我们没有在所选Minecraft文件夹中找到索引文件。它们可能不存在。\n请您更换文件夹或在其中下载一个Minecraft版本以再次尝试。");
+                    openButton.IsEnabled = true;
+                    IsFolderOperable = false;
+                    return;
+                }
 
-        private void InputBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Folder = inputBox.Text;
+                inputBox.Text = minecraftFolder.Path;
+                openButton.IsEnabled = true;
+                StorageApplicationPermissions.FutureAccessList.AddOrReplace("MinecraftFolderToken", minecraftFolder);
+                IniHelper.WriteIni("Minecraft", "Folder", minecraftFolder.Path, MainPage.ConfigDataPath);
+            }
+            else
+            {
+                await LogSystem.WriteLog(LogLevel.Warning, this, "用户没有选择文件夹。");
+                openButton.IsEnabled = true;
+            }
+            IsFolderOperable = false;
         }
     }
 }

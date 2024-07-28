@@ -1,11 +1,8 @@
 ﻿using Ntruk.API;
 using System;
 using System.IO;
-using System.Text;
-using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
-using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -84,7 +81,6 @@ namespace Ntruk.GUI
                 await LogSystem.WriteLog(LogLevel.Warning, this, $"{targetFolder.Path}不存在或程序权限不足无法访问。");
                 ContentDialogHelper.ShowTipDialog("我们无法访问所选目标文件夹。它可能不存在或我们无权访问。\n请您更换文件夹再次尝试。");
                 StorageApplicationPermissions.FutureAccessList.Remove("TargetFolderToken");
-                //添加至INI。
                 currentTarget.PlaceholderText = "重新选择文件夹...";
                 useEvent = true;
                 return;
@@ -100,10 +96,9 @@ namespace Ntruk.GUI
             await LogSystem.WriteLog(LogLevel.Info, this, "尝试修改Minecraft文件夹...");
             useEvent = false;
             changeFolder.IsEnabled = false;
-            StorageFolder formerFolder = await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("MinecraftFolderToken");
-            if (await PickerHelper.UsePickerGetSingleFolder("MinecraftFolderToken") != null)
+            StorageFolder minecraftFolder = await PickerHelper.GetSingleFolderByPicker();
+            if (minecraftFolder != null)
             {
-                StorageFolder minecraftFolder = await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("MinecraftFolderToken");
                 StorageFolder indexesFolder;
                 try
                 {
@@ -113,7 +108,6 @@ namespace Ntruk.GUI
                 {
                     await LogSystem.WriteLog(LogLevel.Warning, this, $"{Path.Combine(minecraftFolder.Path, "assets", "indexes")}不存在或程序权限不足无法访问。");
                     ContentDialogHelper.ShowTipDialog("我们无法访问所选Minecraft文件夹。它可能不存在或我们无权访问。\n请您更换文件夹再次尝试。");
-                    StorageApplicationPermissions.FutureAccessList.AddOrReplace("MinecraftFolderToken", formerFolder);
                     changeFolder.IsEnabled = true;
                     useEvent = true;
                     return;
@@ -123,12 +117,12 @@ namespace Ntruk.GUI
                 {
                     await LogSystem.WriteLog(LogLevel.Warning, this, $"{indexesFolder.Path}中没有资源索引文件（.json）或无权访问它们。");
                     ContentDialogHelper.ShowTipDialog("我们没有在所选Minecraft文件夹中找到索引文件。它可能不存在或我们无权访问。\n请您更换文件夹或在其中下载一个Minecraft版本以再次尝试。");
-                    StorageApplicationPermissions.FutureAccessList.AddOrReplace("MinecraftFolderToken", formerFolder);
                     changeFolder.IsEnabled = true;
                     useEvent = true;
                     return;
                 }
                 IniHelper.WriteIni("Minecraft", "Folder", minecraftFolder.Path, MainPage.ConfigDataPath);
+                StorageApplicationPermissions.FutureAccessList.AddOrReplace("MinecraftFolderToken", minecraftFolder);
                 currentFolder.Text = minecraftFolder.Path;
                 currentVersion.PlaceholderText = "请重新选择版本...";
                 currentVersion.ItemsSource = versions;
@@ -166,18 +160,18 @@ namespace Ntruk.GUI
         {
             await LogSystem.WriteLog(LogLevel.Info, this, "尝试修改目标文件夹...");
             changeTarget.IsEnabled = false;
-            StorageFolder formerFolder = await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("TargetFolderToken");
-            if (await PickerHelper.UsePickerGetSingleFolder("TargetFolderToken") != null)
+            StorageFolder targetFolder = await PickerHelper.GetSingleFolderByPicker();
+            if (targetFolder != null)
             {
                 changeTarget.IsEnabled = true;
-                StorageFolder targetFolder = await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("TargetFolderToken");
                 currentTarget.Text = targetFolder.Path;
+                StorageApplicationPermissions.FutureAccessList.AddOrReplace("TargetFolderToken", targetFolder);
+                IniHelper.WriteIni("Minecraft", "Target", targetFolder.Path, MainPage.ConfigDataPath);
                 await LogSystem.WriteLog(LogLevel.Info, this, "修改目标文件夹成功。");
             }
             else
             {
                 changeTarget.IsEnabled = true;
-                StorageApplicationPermissions.FutureAccessList.AddOrReplace("TargetFolderToken", formerFolder);
                 await LogSystem.WriteLog(LogLevel.Info, this, "用户未选择文件夹，修改目标文件夹失败。");
             }
         }

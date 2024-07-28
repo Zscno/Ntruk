@@ -29,7 +29,8 @@
                 Foreground="#7f7f7f"
                 Text="我们的所有功能将会把输出结果存储到此文件夹或其子文件夹。以后你可以在设置中修改它。"
                 RelativePanel.Below="titleText"
-                Margin="20, 10, 20, 20"/>
+                Margin="20, 10, 20, 20"
+                TextWrapping="WrapWholeWords"/>
             <RelativePanel x:Name="MainContentPanel"
                            RelativePanel.AlignHorizontalCenterWithPanel="True"
                            RelativePanel.AlignVerticalCenterWithPanel="True">
