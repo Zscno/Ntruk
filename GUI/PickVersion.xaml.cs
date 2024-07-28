@@ -1,10 +1,6 @@
 ﻿using Ntruk.API;
-using System;
-using System.IO;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.Storage;
-using Windows.Storage.AccessCache;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 

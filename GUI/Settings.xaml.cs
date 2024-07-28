@@ -74,7 +74,7 @@ namespace Ntruk.GUI
             currentVersion.SelectedItem = versions[count];
             currentFolder.Text = minecraftFolder.Path;
 
-            GetTargetFolder:
+        GetTargetFolder:
             StorageFolder targetFolder = await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("TargetFolderToken");
             if (!Directory.Exists(targetFolder.Path))
             {
