@@ -1,6 +1,7 @@
 ﻿using Ntruk.API;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -25,7 +26,7 @@ namespace Ntruk.GUI
                 case 0:
                     if (!PickFolder.IsFolderOperable)
                     {
-                        ContentDialogHelper.ShowTipDialog("请点击“打开...”按钮并选择一个Minecraft文件夹。");
+                        await ContentDialogHelper.ShowTipDialog("请点击“打开...”按钮并选择一个Minecraft文件夹。");
                     }
                     else
                     {
@@ -40,7 +41,7 @@ namespace Ntruk.GUI
                     if (!PickVersion.DoesTheUserChoose)
                     {
                         await LogSystem.WriteLog(LogLevel.Warning, new PickVersion(), "用户没有选择Minecraft版本。");
-                        ContentDialogHelper.ShowTipDialog("请选择一个Minecraft版本。");
+                        await ContentDialogHelper.ShowTipDialog("请选择一个Minecraft版本。");
                     }
                     else
                     {
@@ -54,13 +55,13 @@ namespace Ntruk.GUI
                 case 2:
                     if (!PickTarget.IsFolderOperable)
                     {
-                        ContentDialogHelper.ShowTipDialog("请点击“打开...”按钮并选择一个文件夹。");
+                        await ContentDialogHelper.ShowTipDialog("请点击“打开...”按钮并选择一个文件夹。");
                     }
                     else
                     {
                         await LogSystem.WriteLog(LogLevel.Info, new PickTarget(), "应用初始化第三步完成。");
                         await LogSystem.WriteLog(LogLevel.Info, this, "应用初始化已全部完成。");
-                        PageHelper.NavigateOneselfTo(this, typeof(UserMainPage));
+                        (VisualTreeHelper.GetParent(this) as Frame).Navigate(typeof(UserMainPage));
                         Count = 3;
                     }
                     break;

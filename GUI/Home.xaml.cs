@@ -1,6 +1,7 @@
 ﻿using Ntruk.API;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -27,7 +28,7 @@ namespace Ntruk.GUI
 
         private void ContentView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            PageHelper.NavigateOneselfTo(this, typeof(MCRE));
+            (VisualTreeHelper.GetParent(this) as Frame).Navigate(typeof(MCRE));
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Ntruk.GUI
                 catch (Exception ex)
                 {
                     await LogSystem.WriteLog(LogLevel.Warning, this, $"获取文件夹{Path.Combine(minecraftFolder.Path, "assets", "indexes")}时触发异常：{ex.Message}。");
-                    ContentDialogHelper.ShowTipDialog("我们无法访问所选Minecraft文件夹。\n请您更换文件夹再次尝试。");
+                    await ContentDialogHelper.ShowTipDialog("我们无法访问所选Minecraft文件夹。\n请您更换文件夹再次尝试。");
                     openButton.IsEnabled = true;
                     IsFolderOperable = false;
                     return;
@@ -55,7 +55,7 @@ namespace Ntruk.GUI
                 if (Versions.Length == 0)
                 {
                     await LogSystem.WriteLog(LogLevel.Warning, this, $"{indexesFolder.Path}中没有资源索引文件（.json）。");
-                    ContentDialogHelper.ShowTipDialog("我们没有在所选Minecraft文件夹中找到索引文件。它们可能不存在。\n请您更换文件夹或在其中下载一个Minecraft版本以再次尝试。");
+                    await ContentDialogHelper.ShowTipDialog("我们没有在所选Minecraft文件夹中找到索引文件。它们可能不存在。\n请您更换文件夹或在其中下载一个Minecraft版本以再次尝试。");
                     openButton.IsEnabled = true;
                     IsFolderOperable = false;
                     return;

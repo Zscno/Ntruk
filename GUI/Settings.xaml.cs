@@ -36,7 +36,7 @@ namespace Ntruk.GUI
             catch (Exception)
             {
                 await LogSystem.WriteLog(LogLevel.Warning, this, $"{Path.Combine(minecraftFolder.Path, "assets", "indexes")}不存在或程序权限不足无法访问。");
-                ContentDialogHelper.ShowTipDialog("我们无法访问所选Minecraft文件夹。它可能不存在或我们无权访问。\n请您更换文件夹再次尝试。");
+                await ContentDialogHelper.ShowTipDialog("我们无法访问所选Minecraft文件夹。它可能不存在或我们无权访问。\n请您更换文件夹再次尝试。");
                 StorageApplicationPermissions.FutureAccessList.Remove("MinecraftFolderToken");
                 useEvent = true;
                 return;
@@ -45,7 +45,7 @@ namespace Ntruk.GUI
             if (versions.Length == 0)
             {
                 await LogSystem.WriteLog(LogLevel.Warning, this, $"{indexesFolder.Path}中没有资源索引文件（.json）或无权访问它们。");
-                ContentDialogHelper.ShowTipDialog("我们没有在所选Minecraft文件夹中找到索引文件。它可能不存在或我们无权访问。\n请您更换文件夹或在其中下载一个Minecraft版本以再次尝试。");
+                await ContentDialogHelper.ShowTipDialog("我们没有在所选Minecraft文件夹中找到索引文件。它可能不存在或我们无权访问。\n请您更换文件夹或在其中下载一个Minecraft版本以再次尝试。");
                 useEvent = true;
                 return;
             }
@@ -65,7 +65,7 @@ namespace Ntruk.GUI
             if (count >= versions.Length)
             {
                 await LogSystem.WriteLog(LogLevel.Warning, this, $"{minecraftFolder.Path}中没有用户上次选择的版本{IniHelper.ReadIni("Minecraft", "Version", MainPage.ConfigDataPath)}（数组索引超出范围）。");
-                ContentDialogHelper.ShowTipDialog("在Minecraft文件夹中我们找不到您选择的版本。\n请您重新选择版本或者文件夹。");
+                await ContentDialogHelper.ShowTipDialog("在Minecraft文件夹中我们找不到您选择的版本。\n请您重新选择版本或者文件夹。");
                 currentVersion.PlaceholderText = "重新选择版本...";
                 IniHelper.WriteIni("Minecraft", "Version", string.Empty, MainPage.ConfigDataPath);
                 useEvent = true;
@@ -79,7 +79,7 @@ namespace Ntruk.GUI
             if (!Directory.Exists(targetFolder.Path))
             {
                 await LogSystem.WriteLog(LogLevel.Warning, this, $"{targetFolder.Path}不存在或程序权限不足无法访问。");
-                ContentDialogHelper.ShowTipDialog("我们无法访问所选目标文件夹。它可能不存在或我们无权访问。\n请您更换文件夹再次尝试。");
+                await ContentDialogHelper.ShowTipDialog("我们无法访问所选目标文件夹。它可能不存在或我们无权访问。\n请您更换文件夹再次尝试。");
                 StorageApplicationPermissions.FutureAccessList.Remove("TargetFolderToken");
                 currentTarget.PlaceholderText = "重新选择文件夹...";
                 useEvent = true;
@@ -107,7 +107,7 @@ namespace Ntruk.GUI
                 catch (Exception)
                 {
                     await LogSystem.WriteLog(LogLevel.Warning, this, $"{Path.Combine(minecraftFolder.Path, "assets", "indexes")}不存在或程序权限不足无法访问。");
-                    ContentDialogHelper.ShowTipDialog("我们无法访问所选Minecraft文件夹。它可能不存在或我们无权访问。\n请您更换文件夹再次尝试。");
+                    await ContentDialogHelper.ShowTipDialog("我们无法访问所选Minecraft文件夹。它可能不存在或我们无权访问。\n请您更换文件夹再次尝试。");
                     changeFolder.IsEnabled = true;
                     useEvent = true;
                     return;
@@ -116,7 +116,7 @@ namespace Ntruk.GUI
                 if (versions.Length == 0)
                 {
                     await LogSystem.WriteLog(LogLevel.Warning, this, $"{indexesFolder.Path}中没有资源索引文件（.json）或无权访问它们。");
-                    ContentDialogHelper.ShowTipDialog("我们没有在所选Minecraft文件夹中找到索引文件。它可能不存在或我们无权访问。\n请您更换文件夹或在其中下载一个Minecraft版本以再次尝试。");
+                    await ContentDialogHelper.ShowTipDialog("我们没有在所选Minecraft文件夹中找到索引文件。它可能不存在或我们无权访问。\n请您更换文件夹或在其中下载一个Minecraft版本以再次尝试。");
                     changeFolder.IsEnabled = true;
                     useEvent = true;
                     return;

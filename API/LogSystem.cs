@@ -8,8 +8,10 @@ namespace Ntruk.GUI
 {
     internal static class LogSystem
     {
+        /// <summary>
+        /// 日志文件。
+        /// </summary>
         public static StorageFile LogFile { get; set; }
-
 
         /// <summary>
         /// 写入日志。
@@ -34,7 +36,7 @@ namespace Ntruk.GUI
                     levelString = "[Error]";
                     break;
             }
-            await FileIO.AppendTextAsync(LogFile, DateTime.Now.ToString("[yyyy-MM-dd HH:mm:ss.fff]") + pageName + levelString +  message + "\n", UnicodeEncoding.Utf8);
+            await FileIO.AppendTextAsync(LogFile, DateTime.Now.ToString("[yyyy-MM-dd HH:mm:ss.fff]") + pageName + levelString + message + "\n", UnicodeEncoding.Utf8);
         }
     }
 

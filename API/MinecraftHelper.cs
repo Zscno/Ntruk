@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI;
@@ -11,49 +11,51 @@ namespace Ntruk.API
     internal static class MinecraftHelper
     {
         /// <summary>
-        /// 获取从<paramref name="fileName"/>解析出的Minecraft版本号。
+        /// 通过索引文件名获取Minecraft版本号。
         /// </summary>
-        /// <param name="fileName">一个正确的Minecraft资源索引文件名。</param>
-        /// <returns>一个正确的Minecraft版本号。</returns>
+        /// <param name="fileName">Minecraft资源索引文件名（带后缀名，非完整路径）。</param>
+        /// <returns>Minecraft版本号。</returns>
         public static string GetVersion(string fileName)
         {
-            string name = Path.GetFileNameWithoutExtension(fileName);
             string version;
-
-            switch (name)
+            switch (fileName)
             {
-                case "2":
+                case "2.json":
                     version = "1.19.3";
                     break;
-                case "3":
+                case "3.json":
                     version = "1.19.4";
                     break;
-                case "5":
-                    version = "1.20";
+                case "5.json":
+                    version = "1.20/1.20.1";
                     break;
-                case "8":
+                case "8.json":
                     version = "1.20.2";
                     break;
-                case "12":
-                    version = "1.20.3";
+                case "12.json":
+                    version = "1.20.3/1.20.4";
+                    break;
+                case "16.json":
+                    version = "1.20.5/1.20.6";
+                    break;
+                case "17.json":
+                    version = "1.21";
                     break;
                 default:
-                    version = name;
+                    version = fileName;
                     break;
             }
-
             return version;
         }
 
         /// <summary>
-        /// 获取从<paramref name="version"/>解析出的Minecraft资源索引文件名。
+        /// 通过Minecraft版本号获取索引文件名。
         /// </summary>
-        /// <param name="version">一个正确的Minecraft版本号。</param>
-        /// <returns>一个正确的Minecraft资源索引文件名。</returns>
+        /// <param name="version">Minecraft版本号。</param>
+        /// <returns>索引文件名。</returns>
         public static string GetFileName(string version)
         {
             string fileName;
-
             switch (version)
             {
                 case "1.19.3":
@@ -62,33 +64,37 @@ namespace Ntruk.API
                 case "1.19.4":
                     fileName = "3.json";
                     break;
-                case "1.20":
+                case "1.20/1.20.1":
                     fileName = "5.json";
                     break;
                 case "1.20.2":
                     fileName = "8.json";
                     break;
-                case "1.20.3":
+                case "1.20.3/1.20.4":
                     fileName = "12.json";
+                    break;
+                case "1.20.5/1.20.6":
+                    fileName = "16.json";
+                    break;
+                case "1.21":
+                    fileName = "17.json";
                     break;
                 default:
                     fileName = version + ".json";
                     break;
             }
-
             return fileName;
         }
 
         /// <summary>
-        /// 获取从<paramref name="extensionName"/>解析出来的图标资源。
+        /// 通过资源文件扩展名获取图标资源。（文件夹可通过传入<c>Folder</c>获取）
         /// </summary>
-        /// <param name="extensionName">一个正确的Minecraft资源文件扩展名。（最前面有“.”的）</param>
-        /// <returns>一组正确的图标资源。</returns>
+        /// <param name="extensionName">资源文件扩展名。</param>
+        /// <returns>一组图标资源。</returns>
         public static (string, SolidColorBrush) GetIcon(string extensionName)
         {
             string icon;
             SolidColorBrush iconColor;
-
             switch (extensionName)
             {
                 case ".png":
@@ -124,36 +130,48 @@ namespace Ntruk.API
                     iconColor = new SolidColorBrush(Color.FromArgb(255, 126, 155, 183));
                     break;
             }
-
-            return (icon,  iconColor);
+            return (icon, iconColor);
         }
 
         /// <summary>
-        /// 获取指定文件夹中所有Minecraft的版本号。
+        /// 获取文件夹中的所有Minecraft版本号。
         /// </summary>
-        /// <param name="folder">一个正确的Minecraft文件夹。</param>
-        /// <returns>指定文件夹中所有Minecraft的版本号。</returns>
-        public async static Task<string[]> GetAllVersions(StorageFolder folder)
+        /// <param name="folder">Minecraft文件夹中的<c>assets\indexes</c>路径</param>
+        /// <returns><see cref="string"/>类型的Minecraft版本号数组。</returns>
+        public static async Task<string[]> GetAllVersions(StorageFolder folder)
         {
             IReadOnlyList<StorageFile> files = await folder.GetFilesAsync();
             string[] versions = new string[files.Count];
             for (int i = 0; i < files.Count; i++)
             {
-                versions[i] = GetVersion(files[i].Path);
+                versions[i] = GetVersion(files[i].Name);
             }
+            //删除重复项。
+            IEnumerable<string> duplicateItems = versions.GroupBy(x => x).Where(g => g.Count() > 1).Select(g => g.Key);
+            if (duplicateItems.Any())
+            {
+                foreach (string duplicateItem in duplicateItems)
+                {
+                    List<string> items = new List<string>(versions);
+                    items.Remove(duplicateItem);
+                    versions = items.ToArray();
+                }
+            }
+
             Array.Sort(versions);
             return versions;
         }
 
         /// <summary>
-        /// 获取从<paramref name="hash"/>解析出来的标题。
+        /// 通过哈希值获取标题。
         /// </summary>
-        /// <param name="hash">一个正确的哈希值。</param>
-        /// <param name="fullName">一个正确的全称。</param>
-        /// <returns>一个正确的标题。
-        /// <para>*如果未解析成功将返回<paramref name="fullName"/> </para>
+        /// <param name="hash">哈希值。</param>
+        /// <param name="path">完整路径。</param>
+        /// <returns>一个标题。
+        /// <para>*如果未解析成功将返回<paramref name="path"/> </para>
         /// </returns>
-        public static string GetTitle(string hash, string fullName)
+        [Obsolete("当前方法不适用于MCREFilePage中的树形结构。")]
+        public static string GetTitle(string hash, string path)
         {
             string title;
             switch (hash)
@@ -326,9 +344,8 @@ namespace Ntruk.API
                 case "00007386081b4c8554508987d95c484c57569d2e":
                     title = "语言-fo_fo.json";
                     break;
-                // TODO
                 default:
-                    title = fullName;
+                    title = path;
                     break;
             }
             return title;

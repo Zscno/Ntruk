@@ -61,29 +61,14 @@ namespace Ntruk.GUI
                     }
                 }
                 contentView.ItemsSource = CurrentData;
+                await LogSystem.WriteLog(LogLevel.Info, this, "MCREFilePage加载完成。");
             }
             catch (Exception ex)
             {
-                await LogSystem.WriteLog(LogLevel.Error, this, $"加载MCREFilePage时{ex.Message} And it is {ex.StackTrace}");
-                ContentDialogResult result = await ContentDialogHelper.ShowErrorDialog("加载页面时遇到错误。请将日志反馈到Github上以解决问题。\n（通过“关于”界面上的“Github”超链接）");
-                switch (result)
-                {
-                    case ContentDialogResult.None:
-                    case ContentDialogResult.Primary:
-                        FolderLauncherOptions folderLauncherOptions = new FolderLauncherOptions();
-                        folderLauncherOptions.ItemsToSelect.Add(LogSystem.LogFile);
-                        await Launcher.LaunchFolderAsync(ApplicationData.Current.LocalFolder, folderLauncherOptions);
-                        CoreApplication.Exit();
-                        break;
-                    case ContentDialogResult.Secondary:
-                        CoreApplication.Exit();
-                        break;
-                    default:
-                        break;
-                }
+                await LogSystem.WriteLog(LogLevel.Error, this, $"加载MCREFilePage时在{ex.TargetSite}触发了{ex.InnerException}：{ex.Message}");
+                await ContentDialogHelper.ShowErrorDialog("加载页面时遇到错误。");
+                loadingAnimation.IsActive = false;
             }
-            await LogSystem.WriteLog(LogLevel.Info, this, "MCREFilePage加载完成。");
-            loadingAnimation.IsActive = false;
         }
 
         private async Task<List<MCREObj>> GetMCREData()
@@ -142,7 +127,7 @@ namespace Ntruk.GUI
             if (MCRE.ReadyData.Count == 0)
             {
                 await LogSystem.WriteLog(LogLevel.Warning, this, "用户没有选择需要提取的资源。");
-                ContentDialogHelper.ShowTipDialog("请选择要提取的资源。");
+                await ContentDialogHelper.ShowTipDialog("请选择要提取的资源。");
                 loadingAnimation.IsActive = false;
                 determineButton.IsEnabled = true;
                 return;
@@ -150,7 +135,7 @@ namespace Ntruk.GUI
             await CopyFile(MCRE.ReadyData);
             MCRE.ReadyData = new List<MCREObj>();
             numberText.Text = "已选择" + MCRE.ReadyData.Count + "个项目。";
-            ContentDialogHelper.ShowTipDialog("提取完毕。");
+            await ContentDialogHelper.ShowTipDialog("提取完毕。");
             await LogSystem.WriteLog(LogLevel.Info, this, "MCRE资源已提取至目标文件夹。");
             determineButton.IsEnabled = true;
             loadingAnimation.IsActive = false;
@@ -171,23 +156,8 @@ namespace Ntruk.GUI
             }
             catch (Exception ex)
             {
-                await LogSystem.WriteLog(LogLevel.Error, this, $"提取MCRE资源时{ex.Message} And it is {ex.StackTrace}");
-                ContentDialogResult result = await ContentDialogHelper.ShowErrorDialog("提取资源时遇到错误。请将日志反馈到Github上以解决问题。\n（通过“关于”界面上的“Github”超链接）");
-                switch (result)
-                {
-                    case ContentDialogResult.None:
-                    case ContentDialogResult.Primary:
-                        FolderLauncherOptions folderLauncherOptions = new FolderLauncherOptions();
-                        folderLauncherOptions.ItemsToSelect.Add(LogSystem.LogFile);
-                        await Launcher.LaunchFolderAsync(ApplicationData.Current.LocalFolder, folderLauncherOptions);
-                        CoreApplication.Exit();
-                        break;
-                    case ContentDialogResult.Secondary:
-                        CoreApplication.Exit();
-                        break;
-                    default:
-                        break;
-                }
+                await LogSystem.WriteLog(LogLevel.Error, this, $"提取MCRE资源时在{ex.TargetSite}触发了{ex.InnerException}：{ex.Message}");
+                await ContentDialogHelper.ShowErrorDialog("提取资源时遇到错误。");
             }
         }
 
@@ -225,9 +195,7 @@ namespace Ntruk.GUI
                         currentObjs.Add(currentObj);
                     }
                 }
-                Frame frame = PageHelper.GetParentElement(this);
-                frame.Navigate(typeof(MCREFilePage), currentObjs);
-
+                (VisualTreeHelper.GetParent(this) as Frame).Navigate(typeof(MCREFilePage), currentObjs);
             }
             else
             {

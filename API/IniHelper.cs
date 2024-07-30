@@ -1,16 +1,17 @@
-﻿using System.Text;
+﻿using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Ntruk.API
 {
     internal static class IniHelper
     {
         // 声明INI文件的写操作函数
-        [System.Runtime.InteropServices.DllImport("kernel32")]
+        [DllImport("kernel32")]
         private static extern long WritePrivateProfileString(string section, string key, string val, string filePath);
 
         // 声明INI文件的读操作函数
-        [System.Runtime.InteropServices.DllImport("kernel32")]
-        private static extern int GetPrivateProfileString(string section, string key, string def, System.Text.StringBuilder retVal, int size, string filePath);
+        [DllImport("kernel32")]
+        private static extern int GetPrivateProfileString(string section, string key, string def, StringBuilder retVal, int size, string filePath);
 
 
         /// <summary>
@@ -34,8 +35,7 @@ namespace Ntruk.API
         /// <returns><paramref name="section"/>、<paramref name="key"/>对应的键值。</returns>
         public static string ReadIni(string section, string key, string path)
         {
-            // 每次从ini中读取多少字节
-            StringBuilder temp = new StringBuilder(255);
+            StringBuilder temp = new StringBuilder(255);// 每次从ini中读取多少字节
             GetPrivateProfileString(section, key, "", temp, 255, path);
             return temp.ToString();
         }

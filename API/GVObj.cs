@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Windows.UI.Xaml.Media;
+﻿using Windows.UI.Xaml.Media;
 
 namespace Ntruk.API
 {
