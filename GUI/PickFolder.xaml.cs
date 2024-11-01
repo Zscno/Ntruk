@@ -18,11 +18,10 @@ namespace Ntruk.GUI
         public PickFolder()
         {
             this.InitializeComponent();
-            IsFolderOperable = false;
         }
 
         /// <summary>
-        /// 指示该界面获取的Folder是否存在并可访问。
+        /// 指示该界面获取的文件夹是否存在并可访问。
         /// </summary>
         public static bool IsFolderOperable { get; private set; } = false;
 
@@ -31,6 +30,11 @@ namespace Ntruk.GUI
         /// </summary>
         public static string[] Versions { get; private set; }
 
+        /// <summary>
+        /// 该界面获取的文件夹。
+        /// </summary>
+        public static string Folder { get; private set; }
+
         private async void OpenButton_Click(object sender, RoutedEventArgs e)
         {
             openButton.IsEnabled = false;
@@ -38,6 +42,8 @@ namespace Ntruk.GUI
             StorageFolder minecraftFolder = await PickerHelper.GetSingleFolderByPicker();
             if (minecraftFolder != null)
             {
+                StorageApplicationPermissions.FutureAccessList.AddOrReplace("MinecraftFolderToken", minecraftFolder);
+
                 StorageFolder indexesFolder;
                 try
                 {
@@ -47,31 +53,57 @@ namespace Ntruk.GUI
                 {
                     await LogSystem.WriteLog(LogLevel.Warning, this, $"获取文件夹{Path.Combine(minecraftFolder.Path, "assets", "indexes")}时触发异常：{ex.Message}。");
                     await ContentDialogHelper.ShowTipDialog("我们无法访问所选Minecraft文件夹。\n请您更换文件夹再次尝试。");
+                    StorageApplicationPermissions.FutureAccessList.Remove("MinecraftFolderToken");
                     openButton.IsEnabled = true;
                     IsFolderOperable = false;
                     return;
                 }
+
                 Versions = await MinecraftHelper.GetAllVersions(indexesFolder);
                 if (Versions.Length == 0)
                 {
                     await LogSystem.WriteLog(LogLevel.Warning, this, $"{indexesFolder.Path}中没有资源索引文件（.json）。");
                     await ContentDialogHelper.ShowTipDialog("我们没有在所选Minecraft文件夹中找到索引文件。它们可能不存在。\n请您更换文件夹或在其中下载一个Minecraft版本以再次尝试。");
+                    StorageApplicationPermissions.FutureAccessList.Remove("MinecraftFolderToken");
                     openButton.IsEnabled = true;
                     IsFolderOperable = false;
                     return;
                 }
 
                 inputBox.Text = minecraftFolder.Path;
-                openButton.IsEnabled = true;
-                StorageApplicationPermissions.FutureAccessList.AddOrReplace("MinecraftFolderToken", minecraftFolder);
+                IsFolderOperable = true;
                 IniHelper.WriteIni("Minecraft", "Folder", minecraftFolder.Path, MainPage.ConfigDataPath);
             }
             else
             {
                 await LogSystem.WriteLog(LogLevel.Warning, this, "用户没有选择文件夹。");
-                openButton.IsEnabled = true;
+                IsFolderOperable = false;
             }
-            IsFolderOperable = false;
+            openButton.IsEnabled = true;
+        }
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            StorageFolder minecraftFolder = null;
+            string folderPath = IniHelper.ReadIni("Minecraft", "Folder", MainPage.ConfigDataPath);
+            if (folderPath != string.Empty)
+            {
+                minecraftFolder = await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("MinecraftFolderToken");
+                if (folderPath !=  minecraftFolder.Path)
+                {
+                    await ContentDialogHelper.ShowErrorDialog("我们在访问Minecraft文件夹时出现了一些问题。");
+                    await LogSystem.WriteLog(LogLevel.Warning, this, $"配置文件的值{folderPath}与程序可访问列表（Token = MinecraftFolderToken）的值{minecraftFolder.Path}不匹配。");
+                }
+            }
+            if (minecraftFolder != null)
+            {
+                inputBox.Text = minecraftFolder.Path;
+                IsFolderOperable = true;
+            }
+            else
+            {
+                IsFolderOperable = false;
+            }
         }
     }
 }

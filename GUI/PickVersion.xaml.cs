@@ -24,6 +24,22 @@ namespace Ntruk.GUI
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             pickBox.ItemsSource = PickFolder.Versions;
+            int count = 0;//初始化界面退出时清空配置文件。
+            if (IniHelper.ReadIni("Minecraft", "Version", MainPage.ConfigDataPath) != string.Empty)
+            {
+                foreach (var item in PickFolder.Versions)
+                {
+                    if (item == IniHelper.ReadIni("Minecraft", "Version", MainPage.ConfigDataPath))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        count++;
+                    }
+                }
+                pickBox.SelectedItem = PickFolder.Versions[count];
+            }
             DoesTheUserChoose = false;
         }
 

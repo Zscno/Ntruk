@@ -15,8 +15,8 @@ namespace Ntruk.GUI
         public Home()
         {
             this.InitializeComponent();
-            List<HomeObj> homeObjs = new List<HomeObj>();
-            HomeObj obj1 = new HomeObj()
+            List<Function> homeObjs = new List<Function>();
+            Function obj1 = new Function()
             {
                 IconLocation = "/Images/MCRE.png",
                 Title = "Minecraft资源提取器",
@@ -28,7 +28,8 @@ namespace Ntruk.GUI
 
         private void ContentView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            (VisualTreeHelper.GetParent(this) as Frame).Navigate(typeof(MCRE));
+            Frame parent = Parent as Frame;
+            parent.Navigate(typeof(MCRE));
         }
     }
 }

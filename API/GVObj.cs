@@ -2,7 +2,7 @@
 
 namespace Ntruk.API
 {
-    internal class HomeObj
+    internal class Function
     {
         /// <summary>
         /// 显示在界面上的图标的相对路径。
@@ -20,7 +20,7 @@ namespace Ntruk.API
         public string Description { get; set; }
     }
 
-    internal class MCREObj
+    internal class MinecraftResourceFile
     {
         /// <summary>
         /// 显示在界面上的标题。

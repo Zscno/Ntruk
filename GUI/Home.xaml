@@ -9,7 +9,7 @@
     xmlns:na="using:Ntruk.API">
 
     <Page.Resources>
-        <DataTemplate x:Key="HomeObj" x:DataType="na:HomeObj">
+        <DataTemplate x:Key="HomeObj" x:DataType="na:Function">
             <RelativePanel MinWidth="300" Height="72" x:Name="ItemPanel">
                 <Image x:Name="iconImage"
                        Source="{x:Bind IconLocation}"

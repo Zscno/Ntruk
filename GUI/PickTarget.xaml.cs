@@ -16,6 +16,7 @@ namespace Ntruk.GUI
         public PickTarget()
         {
             this.InitializeComponent();
+            inputBox.Text = IniHelper.ReadIni("Minecraft", "Target", MainPage.ConfigDataPath);
             IsFolderOperable = false;
         }
 

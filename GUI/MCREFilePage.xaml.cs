@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
-using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -40,14 +38,14 @@ namespace Ntruk.GUI
                 }
                 if (CurrentData == null)
                 {
-                    CurrentData = new List<MCREObj>();
+                    CurrentData = new List<MinecraftResourceFile>();
                     foreach (var item in MCRE.Root.Children)
                     {
-                        MCREObj currentObj = MCRE.MCFileObjs.Find(c => c.Title == item.Data);
+                        MinecraftResourceFile currentObj = MCRE.MCFileObjs.Find(c => c.Title == item.Data);
                         if (currentObj == null)
                         {
                             (string, SolidColorBrush) tuple = MinecraftHelper.GetIcon("Folder");
-                            CurrentData.Add(new MCREObj()
+                            CurrentData.Add(new MinecraftResourceFile()
                             {
                                 Title = item.Data,
                                 Icon = tuple.Item1,
@@ -61,7 +59,12 @@ namespace Ntruk.GUI
                     }
                 }
                 contentView.ItemsSource = CurrentData;
+                if (MCRE.backPageFiles.Count == 0)
+                {
+                    MCRE.homePage = CurrentData;
+                }
                 await LogSystem.WriteLog(LogLevel.Info, this, "MCREFilePage加载完成。");
+                loadingAnimation.IsActive = false;
             }
             catch (Exception ex)
             {
@@ -71,7 +74,7 @@ namespace Ntruk.GUI
             }
         }
 
-        private async Task<List<MCREObj>> GetMCREData()
+        private async Task<List<MinecraftResourceFile>> GetMCREData()
         {
             try
             {
@@ -86,7 +89,7 @@ namespace Ntruk.GUI
                 string fileText = await FileIO.ReadTextAsync(indexeFile);
                 #endregion
 
-                List<MCREObj> objs = new List<MCREObj>();
+                List<MinecraftResourceFile> objs = new List<MinecraftResourceFile>();
 
                 #region 反序列化Minecraft资源索引文件内容，并将提取内容到列表。
                 // 将文本转换为Json文档。
@@ -98,7 +101,7 @@ namespace Ntruk.GUI
                 {
                     string[] pathParts = objProperty.Name.Split('/');
                     (string, SolidColorBrush) tuple = MinecraftHelper.GetIcon(Path.GetExtension(objProperty.Name));
-                    MCREObj obj = new MCREObj()
+                    MinecraftResourceFile obj = new MinecraftResourceFile()
                     {
                         Hash = objProperty.Value.GetProperty("hash").ToString(),
                         Title = pathParts[pathParts.Length - 1],//MinecraftHelper.GetTitle(objProperty.Value.GetProperty("hash").ToString(), objProperty.Name),
@@ -133,23 +136,27 @@ namespace Ntruk.GUI
                 return;
             }
             await CopyFile(MCRE.ReadyData);
-            MCRE.ReadyData = new List<MCREObj>();
+            MCRE.ReadyData = new List<MinecraftResourceFile>();
             numberText.Text = "已选择" + MCRE.ReadyData.Count + "个项目。";
+            loadingAnimation.IsActive = false;
             await ContentDialogHelper.ShowTipDialog("提取完毕。");
             await LogSystem.WriteLog(LogLevel.Info, this, "MCRE资源已提取至目标文件夹。");
             determineButton.IsEnabled = true;
-            loadingAnimation.IsActive = false;
         }
 
-        private async Task CopyFile(List<MCREObj> targetObjs)
+        private async Task CopyFile(List<MinecraftResourceFile> targetObjs)
         {
             try
             {
                 StorageFolder mcFolder = await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("MinecraftFolderToken");
                 StorageFolder objsFolder = await StorageFolder.GetFolderFromPathAsync(Path.Combine(mcFolder.Path, "assets", "objects"));
                 StorageFolder targetFolder = await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("TargetFolderToken");
-                foreach (MCREObj objItem in targetObjs)
+                foreach (MinecraftResourceFile objItem in targetObjs)
                 {
+                    if (File.Exists(Path.Combine(targetFolder.Path, objItem.Title)))
+                    {
+                        break;
+                    }
                     StorageFile objFile = await StorageFile.GetFileFromPathAsync(Path.Combine(objsFolder.Path, objItem.Hash.Substring(0, 2), objItem.Hash));
                     await objFile.CopyAsync(targetFolder, objItem.Title);
                 }
@@ -161,29 +168,29 @@ namespace Ntruk.GUI
             }
         }
 
-        private List<MCREObj> CurrentData;
+        private List<MinecraftResourceFile> CurrentData;
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            CurrentData = (List<MCREObj>)e.Parameter;
+            CurrentData = (List<MinecraftResourceFile>)e.Parameter;
         }
 
         private async void ContentView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            MCREObj obj = e.ClickedItem as MCREObj;
-            List<MCREObj> currentObjs = new List<MCREObj>();
+            MinecraftResourceFile obj = e.ClickedItem as MinecraftResourceFile;
             if (obj.Hash == null)
             {
+                List<MinecraftResourceFile> currentObjs = new List<MinecraftResourceFile>();
                 await LogSystem.WriteLog(LogLevel.Info, this, "打开用户所点击的文件夹...");
                 StringTreeNode treeNode = MCRE.Root.FindNodeByTitle(obj.Title);
                 foreach (var item in treeNode.Children)
                 {
-                    MCREObj currentObj = MCRE.MCFileObjs.Find(c => c.Title == item.Data);
+                    MinecraftResourceFile currentObj = MCRE.MCFileObjs.Find(c => c.Title == item.Data);
                     if (currentObj == null)
                     {
                         (string, SolidColorBrush) tuple = MinecraftHelper.GetIcon("Folder");
-                        currentObjs.Add(new MCREObj()
+                        currentObjs.Add(new MinecraftResourceFile()
                         {
                             Title = item.Data,
                             Icon = tuple.Item1,
@@ -195,10 +202,21 @@ namespace Ntruk.GUI
                         currentObjs.Add(currentObj);
                     }
                 }
-                (VisualTreeHelper.GetParent(this) as Frame).Navigate(typeof(MCREFilePage), currentObjs);
+                MCRE.backPageFiles.Add(CurrentData);
+                (Parent as Frame).Navigate(typeof(MCREFilePage), currentObjs);
             }
             else
             {
+                for (int i = 0; i < MCRE.ReadyData.Count; i++)
+                {
+                    if (obj.Hash == MCRE.ReadyData[i].Hash)
+                    {
+                        MCRE.ReadyData.Remove(obj);
+                        numberText.Text = $"已选择{MCRE.ReadyData.Count}个项目。";
+                        await LogSystem.WriteLog(LogLevel.Info, this, $"将用户已选择的文件（路径：{obj.Path}）从提取文件列表中清除。");
+                        return;
+                    }
+                }
                 MCRE.ReadyData.Add(obj);
                 numberText.Text = "已选择" + MCRE.ReadyData.Count + "个项目。";
                 await LogSystem.WriteLog(LogLevel.Info, this, "将用户所点击的文件添加至提取文件列表...");

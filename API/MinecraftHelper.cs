@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -42,7 +43,7 @@ namespace Ntruk.API
                     version = "1.21";
                     break;
                 default:
-                    version = fileName;
+                    version = Path.GetFileNameWithoutExtension(fileName);
                     break;
             }
             return version;
@@ -158,7 +159,6 @@ namespace Ntruk.API
                 }
             }
 
-            Array.Sort(versions);
             return versions;
         }
 
